@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/dist
+.htaccess
+/public/.htaccess
+*/.htaccess
+/public/api/.htaccess
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite
+*.local
+.vite
+.env
+
+# API - IMPORTANTE: Proteger credenciales
+api/config.php
+public/api/config.php
+dist/api/config.php
+
+# Logs de la API
+api/logs/
+public/api/logs/
+dist/api/logs/
+
+# Archivos de respaldo
+*.bak
+*.backup
+*.old
+*~
