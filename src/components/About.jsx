@@ -26,16 +26,16 @@ export default function About() {
       </h2>
       <div className="space-y-6 text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
         <p>
-          Soy desarrollador de aplicaciones multiplataforma con experiencia en frontend y backend.
+          Soy desarrollador de aplicaciones con experiencia en frontend y backend.
           Me encanta enfrentarme a nuevos desafíos y generar proyectos útiles que solucionen situaciones cotidianas.
         </p>
         <p>
-          He trabajado en desarrollo web, aplicaciones Java y soluciones ERP. Me gusta estar abierto
+          He trabajado en desarrollo web, aplicaciones Java, soluciones ERP, videojuegos... Me gusta estar abierto
           a explorar distintas tecnologías según las necesidades del momento.
         </p>
         <p>
           Mi objetivo es seguir aprendiendo y trabajando en proyectos interesantes. Me gusta colaborar,
-          compartir lo que sé y aprender de los demás. <i>¡Tengo un blog en desarrollo para compartir mis ideas!</i>
+          compartir lo que sé, así como aprender de los demás. <i>¡Tengo un blog en desarrollo para compartir mis ideas!</i>
         </p>
       </div>
       <div className="mt-16">

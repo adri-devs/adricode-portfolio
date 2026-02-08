@@ -1,6 +1,23 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function Hero() {
+  const [isDark, setIsDark] = useState(false);
+  
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    checkTheme(); // Verifica el tema que hay cargado
+    const observer = new MutationObserver(checkTheme); // Inicia un observer
+    observer.observe(document.documentElement, {
+      attributes: true, // Observa cambios en los atributos del elemento raíz
+      attributeFilter: ['class'] // Observa cambios en las clases
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
   return (
     <div className="px-6 lg:px-12 py-20 md:py-32 min-h-screen flex items-center">
       <div className="max-w-4xl">
@@ -28,8 +45,10 @@ export default function Hero() {
           </Link>
         </div>
 
-        <div className="terminal-badge inline-block px-4 py-2 text-emerald-400 rounded-md text-sm font-semibold">
-          $ Ready to code_
+        <div className="terminal-badge inline-block px-4 py-2 rounded-md text-sm font-semibold">
+
+          {isDark ? '$ echo "$ Ready to code"' : '$ Ready to code'}
+          <span className="animate-pulse">_</span>
         </div>
       </div>
     </div>
