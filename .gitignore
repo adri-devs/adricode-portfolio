@@ -28,6 +28,11 @@ lerna-debug.log*
 *.sln
 *.sw?
 
+*.sh
+deployToFTP.sh
+copyProjectToGitFolder.sh
+/.sh
+
 # OS
 Thumbs.db
 
