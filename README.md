@@ -1,4 +1,4 @@
-# Mi porftolio personal: [Live version](https://www.adricode.com)
+# adricode Portfolio
 
 Portfolio personal desarrollado con React, Vite y Tailwind CSS.
 

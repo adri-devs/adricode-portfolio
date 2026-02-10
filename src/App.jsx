@@ -9,23 +9,38 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BottomNavbar from './components/BottomNavbar';
+import BlogList from './components/BlogList';
+import BlogPost from './components/BlogPost';
+import Legal from './components/Legal';
+import Privacy from './components/Privacy';
 import './App.css';
 
 function AppContent() {
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : true;
+    return saved !== null ? JSON.parse(saved) : true;
   });
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode);
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 relative overflow-hidden">
       <div className="background-triangle"></div>
-      <a href="https://drive.google.com/file/d/1tqkOx8XchXLM84Oz35cWnEJk2esLtZKe/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className="cv-corner" aria-label="Descargar CV"></a>
+      <a 
+        href="https://drive.google.com/file/d/1tqkOx8XchXLM84Oz35cWnEJk2esLtZKe/view?usp=drive_link" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="cv-corner" 
+        aria-label="Descargar CV"
+      ></a>
 
       <Header darkMode={darkMode} toggleDarkMode={() => setDarkMode(v => !v)} />
 
@@ -36,7 +51,11 @@ function AppContent() {
               <Route path="/" element={<Hero />} />
               <Route path="/about" element={<About />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/blog" element={<BlogList />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/legal" element={<Legal />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </div>
           <Footer />

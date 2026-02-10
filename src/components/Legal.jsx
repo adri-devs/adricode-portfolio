@@ -11,7 +11,6 @@ export default function Legal() {
             1. Datos identificativos
           </h2>
           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <p className="mb-2"><strong className="text-gray-900 dark:text-white">Titular:</strong> Adrián Pérez</p>
             <p className="mb-2"><strong className="text-gray-900 dark:text-white">Sitio web:</strong> adricode.com</p>
             <p className="mb-2"><strong className="text-gray-900 dark:text-white">Email de contacto:</strong>{' '}
               <a href="mailto:dev@adricode.com" className="text-purple-600 dark:text-purple-400 hover:underline">

@@ -103,8 +103,7 @@ export default function Privacy() {
           </h2>
           <p>
             Los mensajes del formulario de contacto se conservan durante el tiempo necesario para responder a tu consulta
-            y un período razonable posterior para fines de archivo. Los registros de seguridad (logs) se conservan
-            durante un máximo de 90 días.
+            y un período razonable posterior para fines de archivo.
           </p>
         </section>
 

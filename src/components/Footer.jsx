@@ -1,8 +1,9 @@
 import { ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -20,7 +21,18 @@ export default function Footer() {
           <span>Volver al inicio</span>
           <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
         </button>
-        
+
+        {/* Enlaces legales */}
+        <div className="flex items-center gap-4 mb-4 text-sm text-gray-500 dark:text-gray-500">
+          <Link to="/legal" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+            Aviso Legal
+          </Link>
+          <span>•</span>
+          <Link to="/privacy" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+            Privacidad
+          </Link>
+        </div>
+
         <p className="text-sm text-gray-600 dark:text-gray-400">
           &copy; {currentYear} adricode
         </p>

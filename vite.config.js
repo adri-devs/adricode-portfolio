@@ -6,7 +6,16 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    chunkSizeWarningLimit: 1600,
     sourcemap: false,
     minify: 'terser'
+  },
+  server : {
+    proxy: {
+      '/api': {
+        target: 'http://localhost',
+        changeOrigin: true,
+      }
+    }
   }
 })

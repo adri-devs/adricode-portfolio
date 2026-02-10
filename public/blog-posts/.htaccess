@@ -1,0 +1,22 @@
+# Denegar acceso directo a archivos .md
+<FilesMatch "\.md$">
+    Require all denied
+</FilesMatch>
+
+# Permitir acceso a imágenes
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+    Require all granted
+    
+    # Headers de cache para imágenes
+    <IfModule mod_headers.c>
+        Header set Cache-Control "public, max-age=31536000"
+    </IfModule>
+</FilesMatch>
+
+# Denegar acceso a todo lo demás por defecto
+<FilesMatch ".*">
+    Require all denied
+</FilesMatch>
+
+# Las reglas de arriba sobrescriben esta para las imágenes
+Options -Indexes

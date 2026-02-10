@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
-const API_ENDPOINT = import.meta.env.VITE_API_URL;
+const API_ENDPOINT = import.meta.env.VITE_API_URL + import.meta.env.VITE_CONTACT_ENDPOINT || 'https://adricode.com/api/contact.php';
 
 export default function Contact() {
   const [formData, setFormData] = useState({

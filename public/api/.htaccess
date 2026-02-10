@@ -1,0 +1,31 @@
+# Denegar acceso a config.php desde el navegador
+<Files "config.php">
+    Require all denied
+</Files>
+
+# Denegar acceso a archivos de log
+<FilesMatch "\.(log|txt|json)$">
+    Require all denied
+</FilesMatch>
+
+# Denegar acceso al directorio de logs
+<DirectoryMatch "logs">
+    Require all denied
+</DirectoryMatch>
+
+# Proteger archivos de respaldo
+<FilesMatch "\.(bak|backup|old|~)$">
+    Require all denied
+</FilesMatch>
+
+# Permitir acceso a contact.php y al directorio blog
+<FilesMatch "contact\.php$">
+    Require all granted
+</FilesMatch>
+
+# Headers de seguridad
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>

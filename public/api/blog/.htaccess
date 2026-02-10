@@ -1,0 +1,34 @@
+RewriteEngine On
+Options -Indexes
+
+<IfModule mod_headers.c>
+    SetEnvIf Origin "^https?://(www\.)?adricode\.com$" ORIGIN_ALLOWED=$0
+    SetEnvIf Origin "^http://localhost:5173$" ORIGIN_ALLOWED=$0
+    
+    Header set Access-Control-Allow-Origin "%{ORIGIN_ALLOWED}e" env=ORIGIN_ALLOWED
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+    Header set Access-Control-Max-Age "3600"
+    Header set Vary "Origin"
+    
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+
+<FilesMatch "^(blog-config\.php|\.env)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^(posts|post)\.php$">
+    Require all granted
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteRule ^logs/ - [F,L]
+</IfModule>
