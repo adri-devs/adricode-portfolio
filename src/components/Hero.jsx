@@ -63,7 +63,7 @@ export default function Hero() {
             Contactar
           </Link>
         </div>
-        <div className="text-sm font-semibold">
+        <div className="flex text-sm font-semibold">
           <div className="terminal-badge px-4 py-2 rounded-md">
             <span className={`${isDark ? '' : 'hidden'} console-command`}>echo</span> {isDark ? '"$ Ready to code"' : '$ Ready to code'}
             <span className="console-animate-pulse">_</span>
