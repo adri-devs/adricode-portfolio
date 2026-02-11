@@ -151,7 +151,7 @@ export default function BlogPost() {
                       PreTag="div" 
                       wrapLongLines={false}
                       customStyle={{
-                        maxWidth: '100%',
+                        background: 'black',
                         overflowX: 'auto',
                         fontVariantLigatures: 'none',
                         fontFeatureSettings: '"liga" 0, "calt" 0'
