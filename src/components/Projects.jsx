@@ -67,14 +67,14 @@ export default function Projects() {
               rel="noopener noreferrer"
             >
               <div className="grid xl:grid-cols-2">
-                <div className="p-6 space-y-2">
+                <div className="p-6 space-y-2 flex flex-col justify-evenly">
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                       {project.title}
                     </h3>
                   </div>
 
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed py-2 sm:py-0">
                     {project.description}
                   </p>
 

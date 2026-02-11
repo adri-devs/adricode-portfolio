@@ -1,31 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { getTechColor } from '../constants/techColors';
 
 export default function Hero() {
   const [isDark, setIsDark] = useState(false);
 
-  const getTechStyle = (tech) => {
-    const colors = {
-      'PHP': { bg: isDark ? '#6366f1' : '#4f46e5', text: '#ffffff' },
-      'Laravel': { bg: isDark ? '#ef4444' : '#dc2626', text: '#ffffff' },
-      'Flask': { bg: isDark ? '#14b8a6' : '#0d9488', text: '#ffffff' },
-      'Java': { bg: isDark ? '#f97316' : '#ea580c', text: '#ffffff' },
-      'React': { bg: isDark ? '#06b6d4' : '#0891b2', text: '#ffffff' },
-      'JavaScript': { bg: isDark ? '#eab308' : '#facc15', text: isDark ? '#ffffff' : '#1f2937' },
-      'TypeScript': { bg: isDark ? '#2563eb' : '#1d4ed8', text: '#ffffff' },
-      'Tailwind CSS': { bg: isDark ? '#06b6d4' : '#0891b2', text: '#ffffff' },
-      'Bootstrap': { bg: isDark ? '#7c3aed' : '#6d28d9', text: '#ffffff' },
-      'MySQL': { bg: isDark ? '#1e40af' : '#1e3a8a', text: '#ffffff' },
-      'PostgreSQL': { bg: isDark ? '#1e3a8a' : '#1e293b', text: '#ffffff' },
-      'Git': { bg: isDark ? '#ea580c' : '#c2410c', text: '#ffffff' },
-      'Docker': { bg: isDark ? '#2563eb' : '#1d4ed8', text: '#ffffff' },
-      'Vite': { bg: isDark ? '#a855f7' : '#9333ea', text: '#ffffff' },
-      'Apache': { bg: isDark ? '#dc2626' : '#b91c1c', text: '#ffffff' },
-    };
-
-    return colors[tech] || { bg: isDark ? '#64748b' : '#475569', text: '#ffffff' };
-  };
-
+  // Solo visible en esta página
   const techStack = [
     'PHP',
     'Laravel',
@@ -83,9 +63,11 @@ export default function Hero() {
             Contactar
           </Link>
         </div>
-        <div className="terminal-badge w-2/6 px-4 py-2 rounded-md text-sm font-semibold">
-          {isDark ? '$ echo "$ Ready to code"' : '$ Ready to code'}
-          <span className="animate-pulse">_</span>
+        <div className="text-sm font-semibold">
+          <div className="terminal-badge px-4 py-2 rounded-md">
+            <span className={`${isDark ? '' : 'hidden'} console-command`}>echo</span> {isDark ? '"$ Ready to code"' : '$ Ready to code'}
+            <span className="console-animate-pulse">_</span>
+          </div>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
           <p className="text-sm italic text-gray-500 dark:text-gray-400">
@@ -123,15 +105,10 @@ export default function Hero() {
           </h2>
           <div className="flex flex-wrap gap-3">
             {techStack.map((tech, i) => {
-              const style = getTechStyle(tech);
               return (
                 <span
                   key={i}
-                  className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300"
-                  style={{
-                    backgroundColor: style.bg,
-                    color: style.text
-                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${getTechColor(tech)} hover:scale-105`}
                 >
                   {tech}
                 </span>
