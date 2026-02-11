@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
 import ScrollToTop from './components/ScrollToTop';
-import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -45,11 +44,10 @@ function AppContent() {
       <Header darkMode={darkMode} toggleDarkMode={() => setDarkMode(v => !v)} />
 
       <div className="flex pt-16">
-        <main className="flex-1 md:mr-80 min-h-[calc(100vh-4rem)] flex flex-col pb-20 md:pb-0">
+        <main className="flex-1 lg:mr-80 min-h-[calc(100vh-4rem)] flex flex-col pb-20 md:pb-0">
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Hero />} />
-              <Route path="/about" element={<About />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/blog" element={<BlogList />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
@@ -61,7 +59,7 @@ function AppContent() {
           <Footer />
         </main>
 
-        <aside className="hidden md:block fixed right-0 top-16 h-[calc(100vh-4rem)] w-80 border-none overflow-y-auto">
+        <aside className="hidden lg:block fixed right-0 top-16 h-[calc(100vh-4rem)] w-80 border-none overflow-y-auto">
           <Sidebar />
         </aside>
       </div>

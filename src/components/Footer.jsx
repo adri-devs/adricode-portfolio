@@ -12,8 +12,8 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-transparent py-8 mt-16">
-      <div className="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center">
+    <footer className="bg-transparent py-8 mt-16 px-4">
+      <div className="max-w-4xl mx-auto flex flex-col items-center justify-center">
         <button
           onClick={scrollToTop}
           className="group flex items-center gap-2 text-sm text-gray-500 dark:text-gray-500 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-4"
@@ -22,8 +22,7 @@ export default function Footer() {
           <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
         </button>
 
-        {/* Enlaces legales */}
-        <div className="flex items-center gap-4 mb-4 text-sm text-gray-500 dark:text-gray-500">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-4 text-sm text-gray-500 dark:text-gray-500">
           <Link to="/legal" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
             Aviso Legal
           </Link>
@@ -33,7 +32,7 @@ export default function Footer() {
           </Link>
         </div>
 
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
           &copy; {currentYear} adricode
         </p>
       </div>

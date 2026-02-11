@@ -4,7 +4,6 @@ import { Home, User, Briefcase, Mail, BookOpen } from 'lucide-react';
 export default function BottomNavbar() {
   const navLinks = [
     { to: '/', label: 'Inicio', icon: <Home size={20} /> },
-    { to: '/about', label: 'Sobre mí', icon: <User size={20} /> },
     { to: '/projects', label: 'Proyectos', icon: <Briefcase size={20} /> },
     { to: '/blog', label: 'Blog', icon: <BookOpen size={20} /> },
     { to: '/contact', label: 'Contacto', icon: <Mail size={20} /> },

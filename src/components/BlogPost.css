@@ -1,0 +1,463 @@
+.code-wrapper {
+  overflow-x: auto;      /* Solo el wrapper tiene scroll */
+  margin: 1.5rem 0;
+  border-radius: 8px;
+}
+
+.code-wrapper > div {
+  background: #282c34 !important;   /* Forzar fondo oscuro */
+  padding: 1.25rem !important;
+  margin: 0 !important;
+  font-size: 0.9em !important;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL DEL POST
+   ======================================== */
+.blog-post-container {
+  background: rgba(249, 250, 251, 1);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.dark .blog-post-container {
+  background: rgba(31, 41, 55, 0.3);
+}
+
+@media (min-width: 640px) {
+  .blog-post-container {
+    padding: 3rem 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-post-container {
+    max-width: 900px;
+  }
+}
+
+/* Preparate para el CSS que te vas a encontrar a partir de aquí... */
+
+/* ========================================
+   CONTENEDOR DEL ARTÍCULO
+   Permite word-break para TODO excepto código
+   ======================================== */
+.blog-content {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+
+/* 
+  Wrapper externo: 
+  - Maneja el scroll horizontal
+  - Mantiene el ancho del contenedor padre
+  - NO afecta al fondo gris del blog-post-container
+*/
+.code-block-scroll-wrapper {
+  /* Scroll solo aquí */
+  display:block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  
+  /* No se sale del contenedor padre */
+  max-width: 100%;
+  
+  /* Estilo visual del bloque de código */
+  background: #282c34;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Scrollbar personalizada */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.2);
+}
+
+.dark .code-block-scroll-wrapper {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Webkit scrollbar (Chrome/Safari) */
+.code-block-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.code-block-scroll-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.code-block-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.code-block-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* 
+  Pre interno:
+  - NO tiene restricciones de ancho
+  - Puede ser tan ancho como el código necesite
+  - El wrapper maneja el scroll
+*/
+.code-block-scroll-wrapper pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  overflow: visible !important;
+  
+  /* 
+  width: max-content;
+  min-width: 100%;
+  */
+
+  /*white-space: pre !important;
+*/
+}
+
+
+/* ========================================
+   HEADINGS - CON WORD-WRAP
+   ======================================== */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  font-weight: 700;
+  color: inherit;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.blog-content h1 {
+  font-size: 2.25rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.blog-content h2 {
+  font-size: 1.875rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.blog-content h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.blog-content h4 {
+  font-size: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ========================================
+   PÁRRAFOS - CON WORD-WRAP...
+   ======================================== */
+.blog-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  color: inherit;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* ========================================
+   LISTAS - CON WORD-WRAP...
+   ======================================== */
+.blog-content ul,
+.blog-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+
+.blog-content ul {
+  list-style-type: disc;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.blog-content li > ul,
+.blog-content li > ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ========================================
+   CÓDIGO INLINE - SÍ HACE WRAP
+   ======================================== */
+.blog-content code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+/* Código dentro de texto - hace wrap normal */
+.blog-content p code,
+.blog-content li code,
+.blog-content h1 code,
+.blog-content h2 code,
+.blog-content h3 code,
+.blog-content h4 code,
+.blog-content td code,
+.blog-content blockquote code {
+  background: #a78bfa;
+  color: #ffffff;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.88em;
+  font-weight: 500;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.dark .blog-content p code,
+.dark .blog-content li code,
+.dark .blog-content h1 code,
+.dark .blog-content h2 code,
+.dark .blog-content h3 code,
+.dark .blog-content h4 code,
+.dark .blog-content td code,
+.dark .blog-content blockquote code {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
+/* ========================================
+   ENLACES
+   ======================================== */
+.blog-content a {
+  color: #9333ea;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(147, 51, 234, 0.3);
+  transition: all 0.2s ease;
+  padding-bottom: 1px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.blog-content a:hover {
+  color: #7c3aed;
+  border-bottom-color: #7c3aed;
+  background: rgba(147, 51, 234, 0.05);
+}
+
+.dark .blog-content a {
+  color: #c084fc;
+  border-bottom-color: rgba(192, 132, 252, 0.4);
+}
+
+.dark .blog-content a:hover {
+  color: #e9d5ff;
+  border-bottom-color: #e9d5ff;
+  background: rgba(192, 132, 252, 0.1);
+}
+
+/* ========================================
+   ÉNFASIS Y FORMATO
+   ======================================== */
+.blog-content strong {
+  font-weight: 700;
+}
+
+.blog-content em {
+  font-style: italic;
+  color: #6b7280;
+}
+
+.dark .blog-content em {
+  color: #9ca3af;
+}
+
+.blog-content hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+.dark .blog-content hr {
+  border-top-color: #374151;
+}
+
+/* ========================================
+   CITAS
+   ======================================== */
+.blog-content blockquote {
+  border-left: 4px solid #ea8533;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #6b7280;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.dark .blog-content blockquote {
+  border-left-color: #fca884;
+  color: #9ca3af;
+}
+
+/* ========================================
+   TABLAS
+   ======================================== */
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  display: block;
+}
+
+.blog-content th,
+.blog-content td {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.dark .blog-content th,
+.dark .blog-content td {
+  border-color: #374151;
+}
+
+.blog-content th {
+  background: #f9fafb;
+  font-weight: 600;
+}
+
+.dark .blog-content th {
+  background: #1f2937;
+}
+
+/* ========================================
+   IMÁGENES
+   ======================================== */
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* ========================================
+   FIRMA ESTILIZADA
+   ======================================== */
+.signature-wrapper {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.dark .signature-wrapper {
+  border-top-color: #4b5563;
+}
+
+.signature-content {
+  font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #7c3aed;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.dark .signature-content {
+  color: #c084fc;
+}
+
+/* Esta linea rompe todo y es mi mayor dolor de cabeza hasta la fecha,
+el código no se estira a lo largo de la página, permitiendo overflow... */
+/* .blog-post-container .blog-content pre code {
+  white-space: pre !important;
+} */
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .blog-post-container {
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
+  }
+  
+  .blog-content h1 {
+    font-size: 1.875rem;
+  }
+  
+  .blog-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .blog-content h3 {
+    font-size: 1.25rem;
+  }
+  
+  /* En móvil, bloques de código edge-to-edge */
+  /*.code-block-scroll-wrapper {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0;
+  }*/
+  
+  .signature-content {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-post-container {
+    padding: 1.25rem 0.875rem;
+  }
+  
+  .blog-content h1 {
+    font-size: 1.625rem;
+  }
+  
+  .blog-content h2 {
+    font-size: 1.375rem;
+  }
+  
+  .blog-content h3 {
+    font-size: 1.125rem;
+  }
+  
+  .blog-content p,
+  .blog-content li {
+    font-size: 0.9375rem;
+  }
+  
+  .code-block-scroll-wrapper {
+    padding: 1rem;
+  }
+}

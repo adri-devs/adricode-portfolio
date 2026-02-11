@@ -2,12 +2,23 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Filter, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
-// No distinción entre desarrollo local y dev.
 const API_URL = import.meta.env.VITE_API_URL + import.meta.env.VITE_BLOG_ENDPOINT || 'https://adricode.com/api/blog';
+
+const CATEGORY_COLORS = {
+  'Portfolio': 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300',
+  'Desarrollo': 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
+  'Tutorial': 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300',
+  'Opinión': 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
+  'Tecnología': 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300',
+};
+
+const getCategoryColor = (category) => {
+  return CATEGORY_COLORS[category] || 'bg-gray-100 dark:bg-gray-700/30 text-gray-700 dark:text-gray-300';
+};
 
 export default function BlogList() {
   const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(false); // ya no controla el render
+  const [loading, setLoading] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,9 +29,8 @@ export default function BlogList() {
   const [showFilters, setShowFilters] = useState(false);
 
   const fetchPosts = async () => {
-    // setLoading(true);
+    setLoading(true);
     setError(null);
-
     const params = new URLSearchParams({ page: currentPage, limit: 10, order });
     if (searchTerm) params.append('search', searchTerm);
     if (selectedCategory) params.append('category', selectedCategory);
@@ -28,8 +38,8 @@ export default function BlogList() {
     try {
       const response = await fetch(`${API_URL}/posts.php?${params}`);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
       const data = await response.json();
+
       if (data.success) {
         setPosts(data.posts);
         setPagination(data.pagination);
@@ -41,20 +51,21 @@ export default function BlogList() {
       }
     } catch (err) {
       setError('Error de conexión. Por favor, inténtalo de nuevo.');
-    } 
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-  const timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       if (currentPage !== 1) {
         setCurrentPage(1);
       } else {
         fetchPosts();
       }
-  }, 100);
-
-  return () => clearTimeout(timer);
-}, [searchTerm, currentPage, selectedCategory, order]);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [searchTerm, currentPage, selectedCategory, order]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('es-ES', {
@@ -80,17 +91,17 @@ export default function BlogList() {
     setCurrentPage(1);
   };
 
-  // if (loading) {
-  //   return (
-  //     <div className="px-6 lg:px-12 py-20 min-h-screen flex items-center justify-center">
-  //       <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent"></div>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="px-6 lg:px-12 py-20 min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent"></div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
-      <div className="px-6 lg:px-12 py-20">
+      <div className="px-6 lg:px-12 pt-8 lg:pt-10  mx-auto 2xl:ms-32">
         <div className="max-w-5xl mx-auto">
           <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
             <p className="text-red-600 dark:text-red-400">{error}</p>
@@ -101,9 +112,9 @@ export default function BlogList() {
   }
 
   return (
-    <div className="px-6 lg:px-12 py-20">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-10">
+    <div className="px-6 lg:px-12 pt-8 lg:pt-10  mx-auto 2xl:ms-32">
+      <div className="max-w-5xl">
+        <div className="mb-4">
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-3">
             Blog
           </h1>
@@ -159,6 +170,7 @@ export default function BlogList() {
             )}
           </div>
         </div>
+
         {posts && posts.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-600 dark:text-gray-400 text-lg">
@@ -168,7 +180,6 @@ export default function BlogList() {
         ) : (
           <>
             <div className="space-y-5">
-              {/* Mejora, en caso de que no haya posts */}
               {posts?.map((post) => (
                 <Link key={post.slug} to={`/blog/${post.slug}`} className="block group">
                   <article className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-5 hover:shadow-xl hover:border-purple-500 dark:hover:border-purple-400 transition-all">
@@ -182,7 +193,7 @@ export default function BlogList() {
                           {post.category && (
                             <>
                               <span>•</span>
-                              <span className="px-2 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs font-medium">
+                              <span className={`px-2 py-0.5 rounded text-xs font-medium ${getCategoryColor(post.category)}`}>
                                 {post.category}
                               </span>
                             </>
@@ -197,7 +208,7 @@ export default function BlogList() {
                       </div>
                     </div>
                     {post.excerpt && (
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-3 text-sm">
+                      <p className="text-justify text-gray-600 dark:text-gray-300 leading-relaxed mb-3 text-sm">
                         {post.excerpt}
                       </p>
                     )}
@@ -221,7 +232,6 @@ export default function BlogList() {
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-
                 <div className="flex items-center gap-1">
                   {[...Array(pagination.pages)].map((_, idx) => {
                     const page = idx + 1;
@@ -249,7 +259,6 @@ export default function BlogList() {
                     return null;
                   })}
                 </div>
-
                 <button
                   onClick={() => setCurrentPage(Math.min(pagination.pages, currentPage + 1))}
                   disabled={currentPage === pagination.pages}

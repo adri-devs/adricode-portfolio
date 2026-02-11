@@ -22,7 +22,6 @@
   transition: all 0.3s ease;
 }
 
-/* Modo oscuro para terminal badge */
 .dark .terminal-badge {
   background: linear-gradient(135deg, #2d2d44 0%, #1e2a3a 100%);
   color: #d7ecff;
@@ -59,14 +58,6 @@
   border-color: rgba(124, 58, 237, 0.3);
 }
 
-.text-light-pink {
-  color: #e7c0ff;
-}
-
-.text-dark-pink {
-  color: #c09fd5;
-}
-
 .background-triangle {
   position: fixed;
   top: 0;
@@ -74,15 +65,14 @@
   width: 50vw;
   height: 100vh;
   background: #9b50f7;
-  opacity: 0.25;
-  clip-path: polygon(100% 0, 100% 100%, 30% 100%);
+  opacity: 0.2;
   pointer-events: none;
   z-index: 0;
   transition: opacity 0.3s ease;
 }
 
 .dark .background-triangle {
-  opacity: 0.15;
+  opacity: 0.1;
 }
 
 .cv-corner {
@@ -91,7 +81,7 @@
   right: 0;
   width: 250px;
   height: 250px;
-  background: rgba(124, 58, 237, 0.1);
+  background: rgba(124, 58, 237, 0.25);
   opacity: 1;
   clip-path: polygon(100% 100%, 100% 30%, 50% 100%);
   pointer-events: auto;
@@ -119,19 +109,19 @@
 .cv-corner::after {
   content: 'CV';
   position: fixed;
-  bottom: 15px;
-  right: 15px;
-  font-size: 1.65rem;
+  bottom: 10px;
+  right: 25px;
+  font-size: 1.75rem;
   font-weight: 900;
-  color: #7c3aed;
-  font-family: 'Inter', sans-serif;
+  color: #894fec;
+  font-family: 'Fira Code', monospace;
   letter-spacing: 0.05em;
   opacity: 1;
   transition: color 0.3s ease;
 }
 
 .dark .cv-corner::after {
-  color: #e7c0ff;
+  color: #daacf6;
 }
 
 main {
@@ -149,40 +139,58 @@ header {
   z-index: 50;
 }
 
-/* Tablet horizontal (707px - 1080px) */
-@media (min-width: 707px) and (max-width: 1080px) {
+@media (max-width: 640px) {
   .background-triangle {
-    width: 60vw;
-    clip-path: polygon(100% 0, 100% 100%, 40% 100%);
-    opacity: 0.2;
-  }
-  
-  .dark .background-triangle {
-    opacity: 0.12;
-  }
-}
-
-/* Móvil */
-@media (max-width: 768px) {
-  .background-triangle {
-    display: block;
     width: 100vw;
-    height: 100vh;
-    opacity: 0.1;
+    height: 90vh;
     clip-path: polygon(100% 0, 0 0, 100% 100%);
     background: #9b50f7;
   }
-  
-  .dark .background-triangle {
-    opacity: 0.08;
-  }
-  
+
   .cv-corner {
     display: none;
   }
 }
 
-/* Transiciones para cambios de tema */
+@media (min-width: 640px) {
+  .background-triangle {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .cv-corner {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .background-triangle {
+    clip-path: polygon(100% 0, 100% 100%, 10% 100%);
+  }
+
+  .cv-corner {
+    display: flex;
+  }
+}
+
+@media (min-width: 1280px) {
+  .background-triangle {
+    clip-path: polygon(100% 0, 100% 100%, 30% 100%);
+  }
+
+  .cv-corner {
+    display: flex;
+  }
+}
+
+@media (min-width: 1536px) {
+  .background-triangle {
+    clip-path: polygon(100% 0, 100% 100%, 40% 100%);
+  }
+
+  .cv-corner {
+    display: flex;
+  }
+}
+
 * {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-duration: 0.3s;

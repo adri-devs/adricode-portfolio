@@ -1,13 +1,13 @@
 export default function Privacy() {
   return (
-    <div className="px-6 lg:px-12 py-20 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">
+    <div className="px-4 sm:px-6 lg:px-12 pt-8 lg:pt-10 max-w-4xl mx-auto 2xl:ms-32">
+      <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
         Política de Privacidad
       </h1>
-      
+
       <div className="space-y-6 text-gray-600 dark:text-gray-400 leading-relaxed">
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             1. Información que recopilamos
           </h2>
           <p>
@@ -23,7 +23,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             2. Cómo utilizamos tu información
           </h2>
           <p>
@@ -44,7 +44,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             3. Cookies y tecnologías similares
           </h2>
           <p>
@@ -60,7 +60,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             4. Seguridad
           </h2>
           <p>
@@ -75,7 +75,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             5. Tus derechos
           </h2>
           <p>
@@ -89,7 +89,7 @@ export default function Privacy() {
             <li>Solicitar la limitación del tratamiento</li>
             <li>Portabilidad de datos</li>
           </ul>
-          <p className="mt-4">
+          <p className="mt-4 break-words">
             Para ejercer cualquiera de estos derechos, contacta conmigo en:{' '}
             <a href="mailto:dev@adricode.com" className="text-purple-600 dark:text-purple-400 hover:underline">
               dev@adricode.com
@@ -98,7 +98,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             6. Retención de datos
           </h2>
           <p>
@@ -108,7 +108,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             7. Enlaces externos
           </h2>
           <p>
@@ -118,7 +118,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             8. Cambios en esta política
           </h2>
           <p>
@@ -128,7 +128,7 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             9. Contacto
           </h2>
           <p>
@@ -136,8 +136,8 @@ export default function Privacy() {
           </p>
           <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <p className="font-semibold text-gray-900 dark:text-white">Adrián Pérez</p>
-            <p>Email: <a href="mailto:dev@adricode.com" className="text-purple-600 dark:text-purple-400 hover:underline">dev@adricode.com</a></p>
-            <p>Web: <a href="https://adricode.com" className="text-purple-600 dark:text-purple-400 hover:underline">adricode.com</a></p>
+            <p className="break-words">Email: <a href="mailto:dev@adricode.com" className="text-purple-600 dark:text-purple-400 hover:underline">dev@adricode.com</a></p>
+            <p className="break-words">Web: <a href="https://adricode.com" className="text-purple-600 dark:text-purple-400 hover:underline">adricode.com</a></p>
           </div>
         </section>
 

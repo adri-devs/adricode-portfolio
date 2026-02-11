@@ -11,7 +11,6 @@ const MountainIcon = () => (
 export default function Header({ darkMode, toggleDarkMode }) {
   const navLinks = [
     { to: '/', label: 'INICIO' },
-    { to: '/about', label: 'SOBRE MÍ' },
     { to: '/projects', label: 'PROYECTOS' },
     { to: '/blog', label: 'BLOG' },
     { to: '/contact', label: 'CONTACTO' }
@@ -22,7 +21,7 @@ export default function Header({ darkMode, toggleDarkMode }) {
       <div className="h-16 px-4 md:px-8 flex items-center justify-between">
         <nav className="hidden md:flex gap-8 items-center">
           <Link to="/" className="flex items-center gap-2">
-            <div className="flex flex-column gap-1">
+            <div className="flex items-center gap-1">
               <MountainIcon />
               <span className="text-xl font-bold text-gray-900 dark:text-white">adricode</span>
             </div>
@@ -44,16 +43,17 @@ export default function Header({ darkMode, toggleDarkMode }) {
           ))}
         </nav>
 
-        <div className="md:hidden text-lg font-bold text-purple-600 dark:text-purple-400">
+        <Link to="/" className="md:hidden flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
+          <MountainIcon />
           adricode
-        </div>
+        </Link>
 
         <div className="flex items-center gap-3">
           <a
             href="https://drive.google.com/file/d/1tqkOx8XchXLM84Oz35cWnEJk2esLtZKe/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
-            className="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+            className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
             aria-label="Ver CV"
           >
             <span className="text-sm font-semibold">CV</span>
