@@ -3,166 +3,262 @@ title: Construyendo mi blog personal
 category: Portfolio
 author: adri
 date_created: 2026-02-09
+date_modified: 2026-02-18
 excerpt: Cómo monté el blog de mi web usando Markdown, React y una API sencilla en PHP, un viaje rápido por el desarrollo y pequeñas aventuras que he vivido.
 ---
-Tras varias semanas de desarrollo dedicado a mi web personal, decidí que quería tener ella misma un pequeño espacio donde poder escribir mis ideas y proyectos. Lo que quiero es compartir ideas, recopilar código y entretener un rato a quienes fueran los lectores. 
 
-Podría haber usado WordPress, Ghost, o cualquier CMS moderno, incluso mi primer pensamiento fue: base de datos. Sin embargo, ¿realmente lo necesito?
-Quería algo **sencillo, facil de controlar y mío**, algo que pudiese tocar después de 6 meses y fuese fácil entender de nuevo. Además, tenía la oportunidad de buscar tecnologías que no hubiese probado antes y aprender.
+Bienvenido, en este artículo explico cómo desarrollé un sistema de blog ligero y completamente controlable usando archivos Markdown, React en el frontend y PHP en el backend. Mi idea era tener un flujo simple y alejarme de los CMS. Algo fácil de mantener, de entender y versionable.
 
-El planteamiento fue el siguiente:
-- Los posts son archivos `.md` almacenados en servidor
-- El frontend los renderiza con React e intérpretes de Markdown
-- El backend utiliza JSON
-- Nada de paneles de administración ni over-engineering.
+## Arquitectura general
 
----
-## Diseñando el módulo Blog 
-### Markdown como única fuente de verdad
+No voy a mentir, me puse con el desarrollo del blog a la brava. Llegué incluso a crear la base de datos, sin embargo, tardé poco en volver a poner los pies sobre la tierra, recapacitar y asentar unas bases:
 
-Los posts viven como archivos `.md` en el servidor, cada uno con su frontmatter:
+- Los posts se almacenarían como archivos `.md` ¡quiero aprender Markdown!
+- El frontend renderiza mediante React (ya lo hará de alguna manera)
+- El backend lleva comunicación en JSON
+- No hay paneles de administración ni complejidades para montar la app
+
+Al final, a la raíz de mi directorio `public/` añadí:
+
+```
+/blog-posts
+  /images
+  post1.md
+  post2.md
+/src
+  /components
+  /pages
+/api
+  blog/posts.php
+  blog/post.php
+```
+
+## Markdown como fuente de verdad
+
+Cada archivo Markdown contiene un frontmatter (metadata para archivos Markdown, básicamente) en YAML:
 
 ```md
 ---
-title: Mi primer post
-category: Desarrollo
+title: El titulo de la entrada
+category: Opinion
 author: adri
 date_created: 2026-01-20
-date_modified: YYYY-MM-DD
-excerpt: Un resumen corto del contenido, esto es lo que se ve antes de entrar.
+excerpt: Un resumen corto del contenido
 ---
 ```
-La estructura es simple, predecible y fácil de versionar. Me gusta este _approach_ porque puedo escribir en cualquier editor de texto, versionar los posts con git, e incluso conectarme por SSH y editar desde fuera si quiero. Sin bases de datos, sin dependencias raras.
 
-### Frontend: React, Vite y un render de Markdown 'decente'
+Gracias a este enfoque, cualquier editor sirve para desarrollar entradas, es versionable con Git, me permite añadir fechas de creación así como de modificación y otros atributos que quiera utilizar. ¡Edición directa! Sin panel de control, ni protocolos complicados, solo necesito acceso al servidor donde se alojan mis entradas.
 
-La web está montada con React + Vite. Estaba bastante contento con ello, tras tanto desarrollo en Laravel, Astro... Aún así, pensando que tenía un proyecto sólido, tras las primeras impresiones de mis amigos, Mario me dice:
-> ¿Por qué no estás aprovechando React y cargas el contenido con un par de renders? -
+## Frontend: React + Vite + react-router + react-markdown
 
-No tenía ni idea de lo que me estaba hablando. Me documenté e integré react-router en mi aplicación. Para el apartado del blog, pensé primero en cómo accedería un usuario:
+La parte visible del blog viene de varias tecnologías. En un principio, React y Vite dieron pie a que naciera la página. Recuerdo un día, cuando ya tenía un proyecto que yo pensaba *'Joer, qué bueno'*. Me dice mi amigo Mario:
 
-- `/blog` → listado de artículos
-- `/blog/:slug` → post individual
+> ¿Por qué no utilizas react-router? Sí, sí, para renderizar componentes dinámicamente.
 
-Para renderizar el contenido uso **react-markdown** con soporte para GFM (un Markdown especial de GitHub que permite funcionalidades diferentes) y resaltado de código con **react-syntax-highlighter**. El componente (_otro día hablamos de componentes, definición y usos_) del post hace algo muy simple:
+Ni idea de lo que me estaba hablando. Me puse manos a la obra e implementé React Router. Ahora mi archivo principal incluye:
 
-El componente del post hace tres cosas: pide el contenido a la API, renderiza el Markdown, y aplica estilos.
-
-### Imágenes: no os perdáis
-Esto me dio más problemas de los que esperaba. Quería que las rutas relativas funcionaran automáticamente, pero también quería poder usar URLs completas si era necesario. 
-> Oye... He estado mirando tu blog y solo usas rutas relativas en las entradas. ¿Al final no aplicaste esto? -
-
-Primero, prefiero alojar las imágenes en mi propio servidor. Segundo, si, está implementado y no lo uso, así me gusta sobrecomplicarme constantemente.
-
-```javascript
-img({ src, ...props }) {
-  const imgSrc = src?.startsWith('http') ? src : `/blog-posts/images/${src}`;
-  return <img {...props} src={imgSrc} loading="lazy" />;
+```jsx
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <AppContent /> {/* Header + Sidebar + Footer */}
+    </BrowserRouter>
+  );
 }
 ```
-Lo que hace es: si la URL empieza con `http`, la usa tal cual. Si no, asume que es una ruta relativa y la busca en `/blog-posts/images/`. El `loading="lazy"` hace que las imágenes solo se carguen cuando el usuario se acerca a verlas, lo cual ayuda con el rendimiento.
 
-## Estilos: Tailwind Typography
+Con las rutas definidas así:
 
-Aquí viene la parte interesante: el problema con renderizar Markdown en React no es solo el renderizado en sí, sino mantener el formato. Tienes que leer el archivo de manera interna, parsearlo, devolverlo como HTML válido. No solo esto si no que tienes que asegurarte de que los estilos se mantengan coherentes con el resto de la web.
-
-No quería estar escribiendo CSS custom para cada elemento: párrafos, listas, bloques de código, títulos pero si sentía que tenía que haber cierta personalización respecto a las entradas del blog... Tras buscar varias opciones, me decanté por el plugin `@tailwindcss/typography` de la comunidad.
-
-Con un simple:
-
-```html
-prose prose-lg dark:prose-invert max-w-none
+```jsx
+<Routes>
+  <Route path="/"           element={<Hero />} />
+  <Route path="/projects"   element={<Projects />} />
+  <Route path="/blog"       element={<BlogList />} />
+  <Route path="/blog/:slug" element={<BlogPost />} />
+</Routes>
 ```
 
-…todo el contenido Markdown queda bonito. ¿Es la solución más elegante del mundo? Quizás no. ¿Funciona de maravilla? Sí.
+Y con esto podía navegar por las entradas. Vale la pena recordar que `Route` no es un tag HTML *vanilla*, sino que sale del mismo react-router, así como el `BrowserRouter` que abarca todo el contenido.
 
-## Listado de posts: filtros, búsqueda y rendimiento
+### ¿Qué es un slug?
 
-Quería un diseño de blog moderno, pero que se sintiera algo compacto. Este portfolio está en constante evolución y sé que me tendré que enfrentar a nuevos problemas en un futuro... Pero de momento, los rasgos más característicos del blog son:
+Como podéis ver, en el caso de una entrada concreta necesitamos algún identificador. Esto es el **slug**. El término viene del mundo del periodismo en papel: era el nombre informal que se le daba a una noticia durante su producción. La historia viajaba del reportero al editor y a las rotativas siempre referenciada por ese apodo, por ejemplo `kate-and-william`.
 
-- Búsqueda por texto
-- Filtro por categoría
-- Orden por fecha
-- Paginación
+Con el tiempo saltó al mundo web. Sistemas como Django lo usan como parte de la URL: `www.miweb.com/archives/kate-and-william`. Incluso Stack Overflow los usa, con la curiosidad de que puedes cambiar el slug de la URL por cualquier cosa aleatoria y el enlace seguirá funcionando. Puedes leer más sobre su origen [aquí](https://stackoverflow.com/questions/4230846/what-is-the-etymology-of-slug-in-a-url/4230937#4230937).
 
-Uso `URLSearchParams` para mantener el estado sincronizado con la URL. Esto significa que puedes compartir enlaces con filtros específicos **entre personas** y funcionan como esperas.
+Sea como fuere, cuando estamos *webeando* nos gusta mucho utilizar términos de nicho. En este sistema el slug es simplemente el nombre del archivo `.md` sin extensión.
 
-Al principio, si escribías una letra se disparaba una petición a la API. Horrible y sobretodo: inesperado por el usuario. Así que añadí un debounce:
+### ReactMarkdown y syntax highlighting
 
-```javascript
-useEffect(() => {
-  const timer = setTimeout(() => {
-    if (currentPage !== 1) {
-      setCurrentPage(1);
-    } else {
-      fetchPosts();
+Ya tenía todo el backend. Perfecto. Ahora toca hacer que un archivo `.md` se interprete y formatee automáticamente en todos los navegadores, dentro de una aplicación que en desarrollo ejecuta un servidor y en producción otro, y además compatible para todas las vistas. *Jajan't.*
+
+Gracias a [Espen Hovlandsdal](https://espen.codes/) y su librería [react-markdown](https://github.com/remarkjs/react-markdown), interpretar Markdown en React es sorprendentemente directo. Y gracias a [conorhastings](https://github.com/conorhastings) y [react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter), los bloques de código quedan con resaltado de sintaxis: puedo escribir `código bonito` en un momento, ¡gracias a Conor!
+
+El componente de renderizado, con lo mínimo necesario:
+
+```jsx
+<ReactMarkdown
+  remarkPlugins={[remarkGfm, remarkBreaks]}
+  components={{
+    code({ inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || '');
+      return !inline && match ? (
+        <SyntaxHighlighter style={oneDark} language={match[1]} PreTag="div" {...props}>
+          {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
+      ) : (
+        <code className={className} {...props}>{children}</code>
+      );
+    },
+    img({ src, ...props }) {
+      const imgSrc = src?.startsWith('http') ? src : `/blog-posts/images/${src}`;
+      return <img {...props} src={imgSrc} loading="lazy" />;
     }
-  }, 100);
-
-  return () => clearTimeout(timer);
-}, [searchTerm, currentPage, selectedCategory, order]);
+  }}
+>
+  {content}
+</ReactMarkdown>
 ```
 
-Básicamente espera 100ms después de que dejes de escribir antes de hacer la petición. Pequeño detalle, gran diferencia en UX.
+Lo que hace es detectar si un bloque de código tiene lenguaje especificado (` ```javascript `, ` ```php `...) y si es así lo pasa a `SyntaxHighlighter`. Si no, lo trata como código _inline_. Las imágenes las resuelve automáticamente: URL absoluta si empieza por `http`, ruta relativa al directorio de imágenes si no.
 
-Ah, y tuve que dividir la API. Antes tenía todo en _/api/config.php_, pero ahora necesitaba endpoints separados: _/api/blog/posts.php_ para el listado y _/api/blog/post.php_ para posts individuales. También tengo _/api/contact.php_ que no tiene nada que ver con el blog. Divide y vencerás, ya sabes.
+En la versión completa aparecen atributos como: `wrapLongLines`, `customStyle` y `codeTagProps`. He querido evitar que presenciéis una guerra. Hasta este momento no he conseguido evitar del todo los saltos de línea dentro de los bloques de código: si escribo una línea suficientemente larga, en lugar de poder deslizar horizontalmente vas a ver cómo salta a la siguiente. 
 
-## Backend: PHP simple, sin frameworks
+Prueba de ello:
 
-La API está hecha con dos scripts PHP:
+```txt
+Si esto no está ocurriendo...                                                             ¡ya estoy arreglado!
+```
 
-- `posts.php` → devuelve el listado filtado y paginado
-- `post.php` → devuelve un post en específico
+Los estilos del contenido los gestiona **Tailwind Typography**, un plugin de la comunidad que expone un conjunto de clases `prose` con las que todo el Markdown renderizado queda visualmente bonito con el resto de la web sin tener que escribir CSS custom para todo.
 
-El backend hace lo mínimo necesario:
-- Lee archivos `.md` del directorio
-- Extrae el frontmatter usando regex
-- Devuelve JSON
-- Controla CORS y headers de seguridad
+### Parseo del frontmatter
 
-Simple, robusto, fácil de mantener
+Para cada archivo, extraigo el bloque entre `---` con una regex _(una expresión regular, para capturar patrones en las cadenas de texto)_ y almaceno los metadatos de la entrada.
+Si el post no tiene `excerpt` definido en el frontmatter, lo genero automáticamente con los primeros 200 caracteres del contenido:
 
-## El problema pequeño que me hizo perder tiempo grande
+```php
+if (empty($metadata['excerpt'])) {
+    $plainText = strip_tags($markdownContent);
+    $metadata['excerpt'] = mb_substr($plainText, 0, 200);
+    if (mb_strlen($plainText) > 200) {
+        $metadata['excerpt'] .= '...'; // Añadimos 3 dots, que el contenido continua.
+    }
+}
+```
 
-Durante días estuve cambiando contenido en los posts y no veía reflejados los cambios. Modificaba fechas, ajustaba el texto, tocaba la estructura... nada. Refrescaba el navegador, limpiaba caché, revisaba el código del componente. 
+### Paginación y respuesta
 
-Estaba convencido de que era un bug en el renderizado de Markdown, o quizás algo raro con las fechas, o el parser de frontmatter. Pasé horas debuggeando cosas que funcionaban perfectamente.
+La paginación se resuelve con un `array_slice`. Las categorías se calculan siempre sobre el listado completo, independientemente de los filtros aplicados, para que el selector no desaparezca al filtrar:
 
-La realidad era mucho más simple:
+```php
+$limit  = 10;
+$total  = count($posts);
+...
 
-**Tenía `VITE_API_URL` apuntando a producción.**
+echo json_encode([
+    'success'    => true,
+    'posts'      => array_values($paginatedPosts),
+    'pagination' => ['page' => $page, 'limit' => $limit, 'total' => $total, 'pages' => $pages],
+    'categories' => array_values($categories)
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+```
 
-En local estaba leyendo los posts del servidor remoto. Hasta que no hacía deploy… no veía nada nuevo.
+### Posts individuales: seguridad y headers
 
-Una tontería absoluta. Pero me llevó a mejorar varias cosas:
-- Configuré mejor los entornos de desarrollo
-- Añadí scripts para limpiar caché automáticamente
-- Implementé un sistema mejor para detectar cambios en los posts, a continuación hablo de él.
+El script `post.php` empieza validando el slug antes de tocar nada del sistema de archivos. Nada de fiarse del input del usuario:
 
-Día y medio perdido, ¡nunca más me pasará! _ja ja ja..._
+```php
+// Solo caracteres seguros
+$slug = preg_replace('/[^a-z0-9-_]/', '', strtolower($slug));
 
-## ETags: la solución que no conocía
+$postFile = $postsDir . $slug . '.md';
 
-Después del desastre del `.env`, pensé en añadir un botón de **"Refresh"** en la UI para forzar la recarga de posts. Lo implementé, pero se sentía... raro. Innecesario.
+if (!file_exists($postFile)) {
+    http_response_code(404);
+    echo json_encode(['error' => 'Post no encontrado']);
+    exit;
+}
+```
 
-Investigando mejores soluciones descubrí los ETags. Básicamente, el servidor genera un hash del archivo y lo envía en los headers _(otro dolor de cabeza...)_:
+Y los headers CORS se aplican comprobando el origen contra una lista blanca:
 
-- Si el archivo no cambia, el navegador usa la versión cacheada
-- Si el archivo cambia, el hash cambia y el navegador descarga la nueva versión automáticamente
+```php
+$allowedOrigins = ['https://adricode.com', 'http://localhost:5173'];
+if (in_array($_SERVER['HTTP_ORIGIN'] ?? '', $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+}
+header('Access-Control-Allow-Methods: GET, OPTIONS');
+```
 
-Implementarlo no fue especialmente complejo, eliminó completamente la necesidad del botón de refresh. Menos código, mejor UX, todo más limpio. La complejidad con estas adiciones siempre nace del conjunto: ¿Entiendes y está bien el código de los ETags? Si. ¿Funciona? No.
+---
 
-## Conclusión
+## ETags: la caché que se actualiza sola
 
-Este blog no es el más moderno ni el más complejo del mundo. Pero es:
+Durante 2 días cambié contenido en los posts y no lo veía reflejado en ningñun sitio. Modificaba fechas, ajustaba el texto, tocaba la estructura... nada. Refrescaba el navegador, limpiaba caché, revisaba el código.
 
-- Fácil de mantener
-- Fácil de mover
-- Fácil de entender dentro de seis meses
+Estaba convencido de que era un bug en el renderizado de Markdown, o quizás algo raro con las fechas, o el parser del frontmatter. Pasé horas debuggeando cosas que funcionaban perfectamente.
+
+La realidad era mucho más simple: **tenía `VITE_API_URL` apuntando a producción**. En local estaba leyendo los posts del servidor remoto. Hasta que no hacía deploy... no veía nada nuevo.
+
+Una tontería absoluta. Mi primer impulso fue añadir un botón de *"Refresh"* en la UI para forzar la recarga. Lo implementé, pero se sentía raro. Innecesario. Investigando llegué a los **ETags**.
+
+El concepto es sencillo: el servidor genera un hash del recurso y lo manda en los headers de la respuesta. El navegador lo guarda. En la siguiente petición, lo manda de vuelta. El servidor compara: si el archivo no ha cambiado, responde `304 Not Modified` y el navegador usa su copia en caché. Si cambió, manda la versión nueva.
+
+Para un post individual, el hash combina slug, fecha de modificación y tamaño del archivo:
+
+```php
+$lastModified = filemtime($postFile);
+$etag         = md5($slug . $lastModified . filesize($postFile));
+
+header('Cache-Control: public, must-revalidate, max-age=0');
+header('ETag: "' . $etag . '"');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
+```
+
+La comprobación:
+
+```php
+$ifNoneMatch = isset($_SERVER['HTTP_IF_NONE_MATCH'])
+    ? trim($_SERVER['HTTP_IF_NONE_MATCH'], '"')
+    : '';
+
+if ($ifNoneMatch === $etag) {
+    http_response_code(304);
+    exit; // El navegador usa la caché, no se manda nada
+}
+```
+
+Para el listado, el hash se calcula sobre el archivo `.md` más recientemente modificado del directorio:
+
+```php
+$files        = glob($postsDir . '*.md');
+$lastModified = 0;
+
+foreach ($files as $file) {
+    $mtime = filemtime($file);
+    if ($mtime > $lastModified) $lastModified = $mtime;
+}
+
+$etag = md5('posts-list-' . $lastModified . count($files));
+```
+
+Así, si añado un post nuevo o modifico uno existente, el hash cambia automáticamente y el navegador descarga la lista actualizada. Si no ha cambiado nada, `304` y a otra cosa. Resultado: cero peticiones innecesarias, los cambios se reflejan solos y eliminé el botón de refresh por completo.
+
+La complejidad con estas adiciones siempre nace del conjunto: ¿Entiendes y está bien el código de los ETags? Sí. ¿Funciona a la primera? No.
+
+Día y medio perdido. ¡Nunca más me pasará! *ja ja ja...*
+
+---
+
+Este blog no es el más moderno ni el más complejo del mundo. Pero es fácil de mantener, fácil de mover y fácil de entender dentro de un tiempo. Cada problema que he ido encontrando me ha llevado a aprender algo que no tenía en el radar.
 
 Y sobre todo, **me da ganas de escribir**, que era el objetivo principal.
 
 ---
 
-*¡Que vaya bien por los códigos!*  
+<span class="signature">
+*¡Que vaya bien por los códigos!*
 *— adri*
+</span>
