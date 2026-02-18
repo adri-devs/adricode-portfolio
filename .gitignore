@@ -30,7 +30,7 @@ lerna-debug.log*
 *.sw?
 
 # No more blog-posts...
-public/blog-posts/
+public/blog-posts/*
 
 *.sh
 deployToFTP.sh

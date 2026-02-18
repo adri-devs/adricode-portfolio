@@ -196,7 +196,7 @@ header('Access-Control-Allow-Methods: GET, OPTIONS');
 
 ## ETags: la caché que se actualiza sola
 
-Durante 2 días cambié contenido en los posts y no lo veía reflejado en ningñun sitio. Modificaba fechas, ajustaba el texto, tocaba la estructura... nada. Refrescaba el navegador, limpiaba caché, revisaba el código.
+Durante varios días cambié contenido en los posts y no lo veía reflejado en ningñun sitio. Modificaba fechas, ajustaba el texto, tocaba la estructura... nada. Refrescaba el navegador, limpiaba caché, revisaba el código.
 
 Estaba convencido de que era un bug en el renderizado de Markdown, o quizás algo raro con las fechas, o el parser del frontmatter. Pasé horas debuggeando cosas que funcionaban perfectamente.
 
