@@ -8,7 +8,7 @@ const MountainIcon = () => (
   </svg>
 );
 
-export default function Header({ darkMode, toggleDarkMode }) {
+export default function Header({ darkMode, toggleDarkMode, onOpenPlayground }) {
   const navLinks = [
     { to: '/', label: 'INICIO' },
     { to: '/projects', label: 'PROYECTOS' },

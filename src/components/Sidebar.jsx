@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import { Gamepad2 } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ onOpenPlayground }) {
   const socialLinks = [
     {
       name: 'GitHub',
@@ -32,8 +33,26 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="h-full p-3 lg:p-6 flex flex-col">
-      <div className="flex-1"></div>
+    <aside className="h-full p-3 lg:p-6 flex flex-col gap-6">
+      <div className="flex-1">
+        <div className="bg-purple-50 dark:bg-purple-900/10 border border-purple-100 dark:border-purple-800/30 rounded-2xl p-4 transition-all hover:shadow-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 bg-purple-600 rounded-lg text-white">
+              <Gamepad2 className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-gray-900 dark:text-white">Zona Recreo</h4>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Mini-juegos para programadores</p>
+            </div>
+          </div>
+          <button 
+            onClick={onOpenPlayground}
+            className="w-full py-2 bg-white dark:bg-gray-800 border border-purple-200 dark:border-purple-700 text-purple-600 dark:text-purple-400 text-xs font-black rounded-xl hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 dark:hover:text-white transition-all active:scale-95"
+          >
+            ABRIR PLAYGROUND
+          </button>
+        </div>
+      </div>
 
       <div className="border-none space-y-4">
         <div className="flex items-center justify-between gap-4">
