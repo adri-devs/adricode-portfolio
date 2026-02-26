@@ -118,19 +118,19 @@
 }
 
 .project-preview-slant {
-    clip-path: polygon(0 0, 100% 0, 10% 100%, 0 100%);
+    clip-path: polygon(0 0, calc(100% - 0rem) 0, 60% 100%, 0 100%);
     will-change: transform;
 }
 
 @media (min-width: 1280px) {
   .project-preview-slant {
-      clip-path: polygon(0 0, 100% 0, 30% 100%, 0 100%);
+      clip-path: polygon(0 0, calc(100% - 0rem) 0, 70% 100%, 0 100%);
   }
 }
 
 @media (min-width: 1536px) {
   .project-preview-slant {
-      clip-path: polygon(0 0, 100% 0, 40% 100%, 0 100%);
+      clip-path: polygon(0 0, calc(100% - 0rem) 0, 70% 100%, 0 100%);
   }
 }
 

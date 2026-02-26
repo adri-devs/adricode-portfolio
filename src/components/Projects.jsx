@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTechColor } from '../constants/techColors';
 import { ExternalLink, Github, X, Info } from 'lucide-react';
 
-export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState(null);
+export default function Projects({ selectedProject, setSelectedProject }) {
   const [isClosing, setIsClosing] = useState(false);
 
   const projects = [
@@ -67,15 +66,6 @@ export default function Projects() {
     }, 400);
   };
 
-  useEffect(() => {
-    const handleEsc = (event) => {
-      if (event.key === 'Escape') {
-        closePreview();
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [selectedProject]);
 
   return (
     <div className="relative min-h-screen">
@@ -148,17 +138,16 @@ export default function Projects() {
 
           {/* Desktop Sliding Preview */}
           <div 
-            className={`hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-all duration-500 ease-out transform ${isClosing ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}
+            className={`hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-all duration-500 ease-out transform ${isClosing ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100'} animate-in fade-in slide-in-from-left duration-500`}
           >
              <div 
                className="h-full w-full bg-white/40 dark:bg-gray-900/40 shadow-2xl project-preview-slant pointer-events-auto overflow-y-auto"
                style={{ 
-                   background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
-                   backdropFilter: 'blur(24px)'
+   
                }}
              >
                 <div className="min-h-full w-full bg-white/80 dark:bg-gray-900/80 py-16 lg:py-24 p-8 lg:p-12 lg:pr-[50vw]">
-                  <div className="max-w-4xl mx-auto lg:mx-0">
+                  <div className="max-w-5xl mx-auto lg:mx-0">
                     <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={false} />
                   </div>
                 </div>
@@ -189,7 +178,7 @@ function ProjectDetailContent({ project, onClose, isMobile }) {
           {project.title}
         </h3>
         <p className="text-purple-600 dark:text-purple-400 font-bold flex items-center gap-2">
-          <Info className="w-4 h-4" /> {project.subtitle}
+          {project.subtitle}
         </p>
       </div>
 

@@ -14,7 +14,7 @@ export default function CyberLab() {
   ];
 
   return (
-    <div className="min-h-screen pt-4 pb-20 px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen py-16 lg:py-24 px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
       {/* Dynamic Header */}
       <div className="mb-12 transition-all">
         {!activeTool ? (
@@ -125,6 +125,32 @@ function EncodingTool() {
         });
     };
 
+    const atbash = (str) => {
+        return str.replace(/[a-zA-Z]/g, (c) => {
+            const isUpper = c === c.toUpperCase();
+            const start = isUpper ? 65 : 97;
+            const end = isUpper ? 90 : 122;
+            return String.fromCharCode(end - (c.charCodeAt(0) - start));
+        });
+    };
+
+    const morseDict = {
+        'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
+        'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
+        'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+        'Y': '-.--', 'Z': '--..', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
+        '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----', ' ': '/'
+    };
+
+    const toMorse = (str) => {
+        return str.toUpperCase().split('').map(c => morseDict[c] || c).join(' ');
+    };
+
+    const fromMorse = (str) => {
+        const invMorse = Object.fromEntries(Object.entries(morseDict).map(([k, v]) => [v, k]));
+        return str.split(' ').map(c => invMorse[c] || c).join('');
+    };
+
     const encode = () => {
         try {
             if (mode === 'base64') {
@@ -132,8 +158,14 @@ function EncodingTool() {
                     String.fromCharCode('0x' + p1)
                 ));
                 setOutput(b64);
-            } else {
+            } else if (mode === 'rot13') {
                 setOutput(rot13(input));
+            } else if (mode === 'atbash') {
+                setOutput(atbash(input));
+            } else if (mode === 'url') {
+                setOutput(encodeURIComponent(input));
+            } else if (mode === 'morse') {
+                setOutput(toMorse(input));
             }
         } catch (e) {
             setOutput('Error al codificar.');
@@ -147,8 +179,14 @@ function EncodingTool() {
                     '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
                 ).join(''));
                 setOutput(str);
-            } else {
+            } else if (mode === 'rot13') {
                 setOutput(rot13(input));
+            } else if (mode === 'atbash') {
+                setOutput(atbash(input));
+            } else if (mode === 'url') {
+                setOutput(decodeURIComponent(input));
+            } else if (mode === 'morse') {
+                setOutput(fromMorse(input));
             }
         } catch (e) {
             setOutput('Error al decodificar.');
@@ -159,14 +197,14 @@ function EncodingTool() {
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h4 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter italic">
-                    {mode === 'base64' ? 'Base64' : 'Rot13'}
+                    {mode}
                 </h4>
-                <div className="flex bg-gray-100 dark:bg-gray-900/50 p-1 rounded-2xl border border-white/5">
-                    {['base64', 'rot13'].map((m) => (
+                <div className="flex flex-wrap bg-gray-100 dark:bg-gray-900/50 p-1 rounded-2xl border border-white/5 gap-1">
+                    {['base64', 'rot13', 'atbash', 'url', 'morse'].map((m) => (
                         <button
                             key={m}
                             onClick={() => setMode(m)}
-                            className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase transition-all ${
+                            className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase transition-all ${
                                 mode === m 
                                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' 
                                     : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
@@ -192,11 +230,9 @@ function EncodingTool() {
                 <button onClick={encode} className="flex-1 px-8 py-4 bg-blue-600 text-white font-black text-xs rounded-2xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 uppercase tracking-widest">
                     Encriptar
                 </button>
-                {mode === 'base64' && (
-                    <button onClick={decode} className="flex-1 px-8 py-4 bg-gray-800 dark:bg-white text-white dark:text-gray-900 font-black text-xs rounded-2xl hover:opacity-90 transition-all shadow-xl active:scale-95 uppercase tracking-widest">
-                        Desencriptar
-                    </button>
-                )}
+                <button onClick={decode} className="flex-1 px-8 py-4 bg-gray-800 dark:bg-white text-white dark:text-gray-900 font-black text-xs rounded-2xl hover:opacity-90 transition-all shadow-xl active:scale-95 uppercase tracking-widest">
+                    Desencriptar
+                </button>
             </div>
 
             {output && (

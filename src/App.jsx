@@ -23,6 +23,18 @@ function AppContent() {
   });
 
   const [showPlayground, setShowPlayground] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        setShowPlayground(false);
+        setSelectedProject(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -56,10 +68,17 @@ function AppContent() {
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Hero />} />
-              <Route path="/projects" element={<Projects />} />
+              <Route 
+                path="/projects" 
+                element={
+                  <Projects 
+                    selectedProject={selectedProject} 
+                    setSelectedProject={setSelectedProject} 
+                  />
+                } 
+              />
               <Route path="/blog" element={<BlogList />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
-              /* Si estás en modo movil que salga una flechita que al darle salga Blog, CyberLab, Juegos */
               <Route path="/contact" element={<Contact />} />
               <Route path="/legal" element={<Legal />} />
               <Route path="/privacy" element={<Privacy />} />
@@ -70,7 +89,10 @@ function AppContent() {
         </main>
 
         <aside className="hidden lg:block fixed right-0 top-16 h-[calc(100vh-4rem)] w-80 border-none overflow-y-auto">
-          <Sidebar onOpenPlayground={() => setShowPlayground(true)} />
+          <Sidebar 
+            onOpenPlayground={() => setShowPlayground(true)} 
+            selectedProject={selectedProject}
+          />
         </aside>
       </div>
 
