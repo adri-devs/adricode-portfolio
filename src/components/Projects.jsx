@@ -1,6 +1,11 @@
+import { useState, useEffect } from 'react';
 import { getTechColor } from '../constants/techColors';
+import { ExternalLink, Github, X, Info } from 'lucide-react';
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
+
   const projects = [
     {
       title: "Dental Aragonesa",
@@ -49,76 +54,187 @@ export default function Projects() {
     }
   ];
 
+  const handleProjectClick = (project, e) => {
+    e.preventDefault();
+    setSelectedProject(project);
+  };
+
+  const closePreview = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedProject(null);
+      setIsClosing(false);
+    }, 400);
+  };
+
   return (
-    <div className="px-6 lg:px-12 pt-8 md:pt-10 mx-auto 2xl:ms-32">
-      <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white pb-8">
-        Proyectos destacados
-      </h2>
+    <div className="relative min-h-screen">
+      <div className={`px-6 lg:px-12 pt-8 md:pt-10 mx-auto max-w-7xl transition-all duration-500 ${selectedProject ? 'lg:translate-x-[25%] lg:opacity-50 blur-sm lg:blur-none pointer-events-none lg:pointer-events-auto' : ''}`}>
+        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white pb-8">
+          Proyectos destacados
+        </h2>
 
-      <div className="space-y-6">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="bg-white dark:bg-gray-800 rounded-xl w-full 2xl:w-4/5 overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
-          >
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              onClick={(e) => handleProjectClick(project, e)}
+              className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col"
             >
-              <div className="grid xl:grid-cols-2">
-                <div className="p-6 space-y-2 flex flex-col justify-evenly">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed py-2 sm:py-0">
-                    {project.description}
-                  </p>
-
-                  {project.hasSubproject && (
-                    <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                      <div className="flex items-start gap-2">
-                        <svg className="w-4 h-4 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        <div>
-                          <p className="text-xs font-semibold text-purple-700 dark:text-purple-300 mb-1">
-                            {project.subproject.title}
-                          </p>
-                          <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                            {project.subproject.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, i) => (
-                      <span
-                        key={i}
-                        className={`tech-badge px-3 py-1 text-xs font-medium rounded-full ${getTechColor(tech)}`}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="p-0 sm:pb-6 xl:py-6 xl:px-4 flex items-center justify-center">
-                  <img
-                    src={project.image}
-                    alt={`Captura de pantalla de ${project.title}`}
-                    className="w-full sm:w-3/4 xl:w-full h-auto object-contain"
-                    loading="lazy"
-                  />
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
+                <div className="absolute bottom-4 left-4">
+                   <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800">
+                      Ver detalles
+                   </div>
                 </div>
               </div>
-            </a>
+
+              <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                    {project.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.slice(0, 3).map((tech, i) => (
+                    <span
+                      key={i}
+                      className={`px-2 py-1 text-[10px] font-bold rounded-md uppercase tracking-wider ${getTechColor(tech)} opacity-80`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.tech.length > 3 && (
+                    <span className="px-2 py-1 text-[10px] font-bold rounded-md bg-gray-100 dark:bg-gray-700 text-gray-500">
+                      +{project.tech.length - 3}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Preview Pane / Modal */}
+      {selectedProject && (
+        <>
+          {/* Mobile Modal */}
+          <div className="lg:hidden fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className={`bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500 ${isClosing ? 'animate-out slide-out-to-bottom' : ''}`}>
+              <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={true} />
+            </div>
           </div>
-        ))}
+
+          {/* Desktop Sliding Preview */}
+          <div
+            className={`hidden lg:block fixed top-0 left-0 h-screen w-1/2 z-[90] bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-500 ease-out transform ${isClosing ? '-translate-x-full' : 'translate-x-0'}`}
+            style={{
+                clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0 100%)',
+                background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%)',
+                backdropFilter: 'blur(20px)'
+            }}
+          >
+             <div className="h-full w-full bg-white/90 dark:bg-gray-900/95 p-12 pr-24 overflow-y-auto">
+                <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={false} />
+             </div>
+          </div>
+          <div
+            className="hidden lg:block fixed inset-0 z-[80] bg-black/10 dark:bg-black/40 backdrop-blur-sm transition-opacity duration-500"
+            onClick={closePreview}
+          />
+        </>
+      )}
+    </div>
+  );
+}
+
+function ProjectDetailContent({ project, onClose, isMobile }) {
+  return (
+    <div className="relative space-y-6">
+      <button
+        onClick={onClose}
+        className="absolute top-0 right-0 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+      >
+        <X className="w-5 h-5" />
+      </button>
+
+      <div className="space-y-2 pt-4">
+        <h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
+          {project.title}
+        </h3>
+        <p className="text-purple-600 dark:text-purple-400 font-bold flex items-center gap-2">
+          <Info className="w-4 h-4" /> {project.subtitle}
+        </p>
+      </div>
+
+      <img
+        src={project.image}
+        alt={project.title}
+        className="w-full rounded-xl shadow-lg border border-gray-100 dark:border-gray-800"
+      />
+
+      <div className="space-y-4">
+        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          {project.description}
+        </p>
+
+        {project.hasSubproject && (
+          <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-100 dark:border-purple-800/30">
+            <h4 className="text-sm font-bold text-purple-700 dark:text-purple-300 uppercase mb-2">
+              {project.subproject.title}
+            </h4>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {project.subproject.description}
+            </p>
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-2 pt-2">
+          {project.tech.map((tech, i) => (
+            <span
+              key={i}
+              className={`px-3 py-1 text-xs font-bold rounded-full ${getTechColor(tech)} shadow-sm`}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-4 pt-6">
+        {project.demo && (
+          <a
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-purple-500/25 active:scale-95"
+          >
+            <ExternalLink className="w-5 h-5" />
+            VER DEMO EN VIVO
+          </a>
+        )}
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-xl transition-all shadow-lg active:scale-95"
+          >
+            <Github className="w-5 h-5" />
+            REPOSITORIO
+          </a>
+        )}
       </div>
     </div>
   );

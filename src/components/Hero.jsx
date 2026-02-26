@@ -1,28 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getTechColor } from '../constants/techColors';
+import SkillsCloud from './SkillsCloud';
 
 export default function Hero() {
   const [isDark, setIsDark] = useState(false);
-
-  // Solo visible en esta página
-  const techStack = [
-    'PHP',
-    'Laravel',
-    'Flask',
-    'Java',
-    'React',
-    'JavaScript',
-    'TypeScript',
-    'Tailwind CSS',
-    'Bootstrap',
-    'MySQL',
-    'PostgreSQL',
-    'Git',
-    'Docker',
-    'Vite',
-    'Apache',
-  ];
 
   useEffect(() => {
     const checkTheme = () => {
@@ -99,22 +80,11 @@ export default function Hero() {
           </div>
         </div>
 
-        <div>
+        <div className="mb-20 overflow-hidden">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
             Habilidades técnicas
           </h2>
-          <div className="flex flex-wrap gap-3">
-            {techStack.map((tech, i) => {
-              return (
-                <span
-                  key={i}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${getTechColor(tech)} hover:scale-105`}
-                >
-                  {tech}
-                </span>
-              );
-            })}
-          </div>
+          <SkillsCloud />
         </div>
       </section>
     </>

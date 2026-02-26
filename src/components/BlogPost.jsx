@@ -157,8 +157,8 @@ export default function BlogPost() {
                         fontFeatureSettings: '"liga" 0, "calt" 0'
                       }}
                       codeTagProps={{ style: {
-                              whiteSpace: 'pre-wrap',
-                              wordBreak: 'break-word'
+                              whiteSpace: 'pre',
+                              wordBreak: 'normal'
                             }}}
                       {...props}
                     >

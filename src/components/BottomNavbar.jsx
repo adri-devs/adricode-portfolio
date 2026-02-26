@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { Home, User, Briefcase, Mail, BookOpen } from 'lucide-react';
+import { Home, Briefcase, Mail, BookOpen, Gamepad2 } from 'lucide-react';
 
-export default function BottomNavbar() {
+export default function BottomNavbar({ onOpenPlayground }) {
   const navLinks = [
     { to: '/', label: 'Inicio', icon: <Home size={20} /> },
     { to: '/projects', label: 'Proyectos', icon: <Briefcase size={20} /> },
@@ -11,7 +11,14 @@ export default function BottomNavbar() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700 z-50">
-      <div className="flex justify-around items-center h-16 overflow-x-auto">
+      <div className="flex justify-around items-center h-16">
+        <button
+          onClick={onOpenPlayground}
+          className="flex flex-col items-center gap-1 transition-colors min-w-[60px] text-gray-600 dark:text-gray-400"
+        >
+          <Gamepad2 size={20} />
+          <span className="text-[10px] font-medium uppercase tracking-wider">Jugar</span>
+        </button>
         {navLinks.map(({ to, label, icon }) => (
           <NavLink
             key={to}

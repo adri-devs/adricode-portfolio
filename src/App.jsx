@@ -12,6 +12,7 @@ import BlogList from './components/BlogList';
 import BlogPost from './components/BlogPost';
 import Legal from './components/Legal';
 import Privacy from './components/Privacy';
+import Playground from './components/Playground';
 import './App.css';
 
 function AppContent() {
@@ -19,6 +20,8 @@ function AppContent() {
     const saved = localStorage.getItem('darkMode');
     return saved !== null ? JSON.parse(saved) : true;
   });
+
+  const [showPlayground, setShowPlayground] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -41,7 +44,11 @@ function AppContent() {
         aria-label="Descargar CV"
       ></a>
 
-      <Header darkMode={darkMode} toggleDarkMode={() => setDarkMode(v => !v)} />
+      <Header
+        darkMode={darkMode}
+        toggleDarkMode={() => setDarkMode(v => !v)}
+        onOpenPlayground={() => setShowPlayground(true)}
+      />
 
       <div className="flex pt-16">
         <main className="flex-1 lg:mr-80 min-h-[calc(100vh-4rem)] flex flex-col pb-20 md:pb-0">
@@ -60,11 +67,17 @@ function AppContent() {
         </main>
 
         <aside className="hidden lg:block fixed right-0 top-16 h-[calc(100vh-4rem)] w-80 border-none overflow-y-auto">
-          <Sidebar />
+          <Sidebar onOpenPlayground={() => setShowPlayground(true)} />
         </aside>
       </div>
 
-      <BottomNavbar />
+      <BottomNavbar onOpenPlayground={() => setShowPlayground(true)} />
+
+      {showPlayground && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
+          <Playground onClose={() => setShowPlayground(false)} />
+        </div>
+      )}
     </div>
   );
 }
