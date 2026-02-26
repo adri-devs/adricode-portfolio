@@ -108,20 +108,15 @@
   - Puede ser tan ancho como el código necesite
   - El wrapper maneja el scroll
 */
-.code-block-scroll-wrapper pre {
+.code-block-scroll-wrapper pre,
+.code-block-scroll-wrapper > div {
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
   border: none !important;
   overflow: visible !important;
-  
-  /* 
   width: max-content;
   min-width: 100%;
-  */
-
-  /*white-space: pre !important;
-*/
 }
 
 
@@ -138,7 +133,6 @@
   color: inherit;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  hyphens: auto;
 }
 
 .blog-content h1 {
@@ -177,7 +171,6 @@
   color: inherit;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  hyphens: auto;
 }
 
 /* ========================================
@@ -437,7 +430,7 @@ el código no se estira a lo largo de la página, permitiendo overflow... */
 
 @media (max-width: 480px) {
   .blog-post-container {
-    padding: 1.25rem 0.875rem;
+    padding: 1rem 0.75rem;
   }
   
   .blog-content h1 {

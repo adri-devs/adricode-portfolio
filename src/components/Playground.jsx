@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Trophy, Play, RotateCcw, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Trophy, Play, RotateCcw, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 
 const GRID_SIZE = 20;
 const INITIAL_SNAKE = [{ x: 10, y: 10 }, { x: 10, y: 11 }, { x: 10, y: 12 }];
@@ -7,6 +7,63 @@ const INITIAL_DIRECTION = { x: 0, y: -1 };
 const SPEED = 150;
 
 export default function Playground({ onClose }) {
+  const [activeGame, setActiveGame] = useState(null);
+
+  const games = [
+    { id: 'snake', name: 'Snake Retro', icon: '🐍', available: false },
+    { id: 'pong', name: 'Cyber Pong', icon: '🏓', available: false },
+    { id: 'breakout', name: 'Brick Breaker', icon: '🧱', available: false },
+    { id: 'tetris', name: 'Block Puzzle', icon: '🧩', available: false },
+  ];
+
+  if (!activeGame) {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700 w-full max-w-md mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <Play className="w-5 h-5 text-purple-600" /> Zona Recreo
+          </h3>
+          {onClose && (
+            <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          {games.map((game) => (
+            <div 
+              key={game.id}
+              className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between ${
+                game.available 
+                  ? 'border-purple-100 dark:border-purple-900/30 hover:border-purple-500 cursor-pointer' 
+                  : 'border-gray-100 dark:border-gray-700 opacity-75 grayscale'
+              }`}
+              onClick={() => game.available && setActiveGame(game.id)}
+            >
+              <div className="flex items-center gap-4">
+                <span className="text-3xl">{game.icon}</span>
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white">{game.name}</h4>
+                  <p className="text-xs text-gray-500">{game.available ? '¡Haz clic para jugar!' : 'Próximamente'}</p>
+                </div>
+              </div>
+              {!game.available && (
+                <span className="text-[10px] font-black px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-400 rounded-md uppercase">
+                  No disponible
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-8 text-xs text-center text-gray-500 dark:text-gray-400 font-medium">
+          Más juegos en camino...
+        </p>
+      </div>
+    );
+  }
+
   /* SNAKE AUTO-GENERADO, DE EJEMPLO PARA EL DESARROLLO */
   const [snake, setSnake] = useState(INITIAL_SNAKE);
   const [food, setFood] = useState({ x: 5, y: 5 });
@@ -106,11 +163,20 @@ export default function Playground({ onClose }) {
         <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <Play className="w-5 h-5 text-purple-600" /> Playground: Snake
         </h3>
-        {onClose && (
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
-            <X className="w-5 h-5 text-gray-500" />
+        <div className="flex gap-2">
+          <button 
+            onClick={() => setActiveGame(null)} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500"
+            title="Volver al menú"
+          >
+            <ArrowLeft className="w-5 h-5" />
           </button>
-        )}
+          {onClose && (
+            <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex justify-between mb-4">

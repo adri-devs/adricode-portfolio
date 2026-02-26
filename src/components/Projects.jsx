@@ -138,15 +138,20 @@ export default function Projects() {
 
           {/* Desktop Sliding Preview */}
           <div 
-            className={`hidden lg:block fixed top-0 left-0 h-screen w-1/2 z-[90] bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-500 ease-out transform ${isClosing ? '-translate-x-full' : 'translate-x-0'}`}
-            style={{ 
-                clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0 100%)',
-                background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%)',
-                backdropFilter: 'blur(20px)'
-            }}
+            className={`hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-transform duration-500 ease-out transform ${isClosing ? '-translate-x-full' : 'translate-x-0'}`}
           >
-             <div className="h-full w-full bg-white/90 dark:bg-gray-900/95 p-12 pr-24 overflow-y-auto">
-                <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={false} />
+             <div 
+               className="h-full w-full bg-white dark:bg-gray-900 shadow-2xl project-preview-slant pointer-events-auto overflow-y-auto"
+               style={{ 
+                   background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%)',
+                   backdropFilter: 'blur(20px)'
+               }}
+             >
+                <div className="min-h-full w-full bg-white/90 dark:bg-gray-900/95 p-12 lg:pr-[45vw]">
+                  <div className="max-w-4xl mx-auto lg:mx-0">
+                    <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={false} />
+                  </div>
+                </div>
              </div>
           </div>
           <div 

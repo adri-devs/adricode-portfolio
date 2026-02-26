@@ -138,32 +138,36 @@ export default function BlogPost() {
           )}
         </header>
         <div className="w-full blog-post-container">
-          <article className="w-full blog-content text-justify">
+          <article className="w-full blog-content">
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
                 code({ inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || '');
                   return !inline && match ? (
-                    <SyntaxHighlighter
-                      style={oneDark}
-                      language={match[1]}
-                      PreTag="div" 
-                      wrapLongLines={false}
-                      customStyle={{
-                        background: 'black',
-                        overflowX: 'auto',
-                        fontVariantLigatures: 'none',
-                        fontFeatureSettings: '"liga" 0, "calt" 0'
-                      }}
-                      codeTagProps={{ style: {
-                              whiteSpace: 'pre-wrap',
-                              wordBreak: 'break-word'
-                            }}}
-                      {...props}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
+                    <div className="code-block-scroll-wrapper">
+                      <SyntaxHighlighter
+                        style={oneDark}
+                        language={match[1]}
+                        PreTag="div" 
+                        wrapLongLines={false}
+                        customStyle={{
+                          background: 'transparent',
+                          overflowX: 'visible',
+                          fontVariantLigatures: 'none',
+                          fontFeatureSettings: '"liga" 0, "calt" 0',
+                          padding: '1.5rem',
+                          margin: 0
+                        }}
+                        codeTagProps={{ style: {
+                                whiteSpace: 'pre',
+                                wordBreak: 'normal'
+                              }}}
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    </div>
                   ) : (
                     <code className={className} {...props}>{children}</code>
                   );

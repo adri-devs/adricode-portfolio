@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Gamepad2 } from 'lucide-react';
+import { Gamepad2, Shield } from 'lucide-react';
 
 export default function Sidebar({ onOpenPlayground }) {
   const socialLinks = [
@@ -42,7 +42,7 @@ export default function Sidebar({ onOpenPlayground }) {
             </div>
             <div>
               <h4 className="text-sm font-bold text-gray-900 dark:text-white">Zona Recreo</h4>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Mini-juegos para programadores</p>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Mini-juegos</p>
             </div>
           </div>
           <button 
@@ -51,6 +51,24 @@ export default function Sidebar({ onOpenPlayground }) {
           >
             ABRIR PLAYGROUND
           </button>
+        </div>
+
+        <div className="mt-6 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30 rounded-2xl p-4 transition-all hover:shadow-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 bg-blue-600 rounded-lg text-white">
+              <Shield className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-gray-900 dark:text-white">Zona CyberLab</h4>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Herramientas útiles</p>
+            </div>
+          </div>
+          <Link 
+            to="/cyberlab"
+            className="block w-full py-2 bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-700 text-blue-600 dark:text-blue-400 text-xs font-black rounded-xl hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all active:scale-95 text-center"
+          >
+            ENTRAR AL LAB
+          </Link>
         </div>
       </div>
 

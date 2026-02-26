@@ -31,8 +31,8 @@ export default function SkillsCloud() {
     const items = SKILLS.map(() => ({
       x: Math.random() * (rect.width - 80) + 40,
       y: Math.random() * (rect.height - 80) + 40,
-      vx: (Math.random() - 0.5) * 1.5,
-      vy: (Math.random() - 0.5) * 1.5,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
     }));
 
     let animationId;
@@ -60,18 +60,18 @@ export default function SkillsCloud() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
             const force = (120 - dist) / 120;
-            item.vx += dx * force * 0.03;
-            item.vy += dy * force * 0.03;
+            item.vx += dx * force * 0.0025;
+            item.vy += dy * force * 0.0025;
           }
         }
 
         // Constant speed maintenance
         const speed = Math.sqrt(item.vx * item.vx + item.vy * item.vy);
-        if (speed < 0.5) {
-            item.vx *= 1.1;
-            item.vy *= 1.1;
+        if (speed < 0.05) {
+            item.vx *= 1.05;
+            item.vy *= 1.05;
         }
-        if (speed > 4) {
+        if (speed > 0.6) {
             item.vx *= 0.9;
             item.vy *= 0.9;
         }

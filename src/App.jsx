@@ -13,6 +13,7 @@ import BlogPost from './components/BlogPost';
 import Legal from './components/Legal';
 import Privacy from './components/Privacy';
 import Playground from './components/Playground';
+import CyberLab from './components/CyberLab';
 import './App.css';
 
 function AppContent() {
@@ -51,16 +52,18 @@ function AppContent() {
       />
 
       <div className="flex pt-16">
-        <main className="flex-1 lg:mr-80 min-h-[calc(100vh-4rem)] flex flex-col pb-20 md:pb-0">
+        <main className="flex-1 lg:mr-80 min-h-[calc(100vh-4rem)] flex flex-col pb-20 md:pb-0 min-w-0">
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Hero />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/blog" element={<BlogList />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+              /* Si estás en modo movil que salga una flechita que al darle salga Blog, CyberLab, Juegos */
               <Route path="/contact" element={<Contact />} />
               <Route path="/legal" element={<Legal />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/cyberlab" element={<CyberLab />} />
             </Routes>
           </div>
           <Footer />

@@ -208,7 +208,7 @@ export default function BlogList() {
                       </div>
                     </div>
                     {post.excerpt && (
-                      <p className="text-justify text-gray-600 dark:text-gray-300 leading-relaxed mb-3 text-sm">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-3 text-sm">
                         {post.excerpt}
                       </p>
                     )}

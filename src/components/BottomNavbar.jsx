@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Briefcase, Mail, BookOpen, Gamepad2 } from 'lucide-react';
+import { Home, Briefcase, Mail, BookOpen, Gamepad2, Shield } from 'lucide-react';
 
 export default function BottomNavbar({ onOpenPlayground }) {
   const navLinks = [
     { to: '/', label: 'Inicio', icon: <Home size={20} /> },
     { to: '/projects', label: 'Proyectos', icon: <Briefcase size={20} /> },
     { to: '/blog', label: 'Blog', icon: <BookOpen size={20} /> },
+    { to: '/cyberlab', label: 'CyberLab', icon: <Shield size={20} /> },
     { to: '/contact', label: 'Contacto', icon: <Mail size={20} /> },
   ];
 
@@ -14,17 +15,17 @@ export default function BottomNavbar({ onOpenPlayground }) {
       <div className="flex justify-around items-center h-16">
         <button
           onClick={onOpenPlayground}
-          className="flex flex-col items-center gap-1 transition-colors min-w-[60px] text-gray-600 dark:text-gray-400"
+          className="flex-1 flex flex-col items-center gap-1 transition-colors text-gray-600 dark:text-gray-400"
         >
           <Gamepad2 size={20} />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Jugar</span>
+          <span className="text-[10px] font-medium uppercase tracking-wider">Mini-juegos</span>
         </button>
         {navLinks.map(({ to, label, icon }) => (
           <NavLink
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-1 transition-colors min-w-[60px] ${
+              `flex-1 flex flex-col items-center gap-1 transition-colors ${
                 isActive
                   ? 'text-purple-600 dark:text-purple-400'
                   : 'text-gray-600 dark:text-gray-400'
