@@ -76,14 +76,14 @@
   width: 50vw;
   height: 100vh;
   background: #9b50f7;
-  opacity: 0.2;
+  opacity: 0.35;
   pointer-events: none;
   z-index: 0;
   transition: opacity 0.3s ease;
 }
 
 .dark .background-triangle {
-  opacity: 0.1;
+  opacity: 0.15;
 }
 
 .cv-corner {
@@ -118,18 +118,19 @@
 }
 
 .project-preview-slant {
-    clip-path: polygon(0 0, 100% 0, 55% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 10% 100%, 0 100%);
+    will-change: transform;
 }
 
 @media (min-width: 1280px) {
   .project-preview-slant {
-      clip-path: polygon(0 0, 100% 0, 65% 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 0, 30% 100%, 0 100%);
   }
 }
 
 @media (min-width: 1536px) {
   .project-preview-slant {
-      clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 0, 40% 100%, 0 100%);
   }
 }
 
