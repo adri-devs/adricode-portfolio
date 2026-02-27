@@ -8,14 +8,24 @@ export default function Footer() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
+      const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      setShowScrollTop(scrollPos > 300);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    // Fallback for some mobile browsers
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    document.body.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
