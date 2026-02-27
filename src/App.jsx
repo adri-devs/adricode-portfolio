@@ -99,8 +99,13 @@ function AppContent() {
       <BottomNavbar onOpenPlayground={() => setShowPlayground(true)} />
 
       {showPlayground && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
-          <Playground onClose={() => setShowPlayground(false)} />
+        <div 
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300"
+          onClick={() => setShowPlayground(false)}
+        >
+          <div onClick={(e) => e.stopPropagation()}>
+            <Playground onClose={() => setShowPlayground(false)} />
+          </div>
         </div>
       )}
     </div>

@@ -130,9 +130,17 @@ export default function Projects({ selectedProject, setSelectedProject }) {
       {selectedProject && (
         <>
           {/* Mobile Modal */}
-          <div className="lg:hidden fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className={`bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500 ${isClosing ? 'animate-out slide-out-to-bottom' : ''}`}>
-              <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={true} />
+          <div 
+            className="lg:hidden fixed inset-0 z-[100] flex items-center sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={closePreview}
+          >
+            <div 
+              className={`bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500 max-h-[90vh] flex flex-col ${isClosing ? 'animate-out slide-out-to-bottom' : ''}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="overflow-y-auto p-6">
+                <ProjectDetailContent project={selectedProject} onClose={closePreview} isMobile={true} />
+              </div>
             </div>
           </div>
 
@@ -165,7 +173,7 @@ export default function Projects({ selectedProject, setSelectedProject }) {
 
 function ProjectDetailContent({ project, onClose, isMobile }) {
   return (
-    <div className="relative space-y-6">
+    <div className={`relative ${isMobile ? 'space-y-4' : 'space-y-6'}`}>
       <button 
         onClick={onClose}
         className="absolute top-0 right-0 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
@@ -173,11 +181,11 @@ function ProjectDetailContent({ project, onClose, isMobile }) {
         <X className="w-5 h-5" />
       </button>
 
-      <div className="space-y-2 pt-4">
-        <h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
+      <div className={`space-y-2 ${isMobile ? 'pt-2' : 'pt-4'}`}>
+        <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-black text-gray-900 dark:text-white uppercase tracking-tighter`}>
           {project.title}
         </h3>
-        <p className="text-purple-600 dark:text-purple-400 font-bold flex items-center gap-2">
+        <p className="text-purple-600 dark:text-purple-400 font-bold flex items-center gap-2 pb-2">
           {project.subtitle}
         </p>
       </div>
@@ -188,8 +196,8 @@ function ProjectDetailContent({ project, onClose, isMobile }) {
         className="w-full rounded-xl shadow-lg border border-gray-100 dark:border-gray-800"
       />
 
-      <div className="space-y-4">
-        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+      <div className={`${isMobile ? 'space-y-3' : 'space-y-4'}`}>
+        <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-700 dark:text-gray-300 leading-relaxed`}>
           {project.description}
         </p>
 
