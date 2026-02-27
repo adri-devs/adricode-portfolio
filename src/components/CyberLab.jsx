@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, Lock, Unlock, Search, Cpu, Globe, Hash, RefreshCcw, ArrowLeft, X } from 'lucide-react';
+import { Shield, Lock, Unlock, Search, Cpu, Globe, Hash, RefreshCcw, ArrowLeft, X, FileText, Copy, Check } from 'lucide-react';
 
 export default function CyberLab() {
   const [activeTool, setActiveTool] = useState(null);
@@ -11,6 +11,7 @@ export default function CyberLab() {
     { id: 'ip-lookup', name: 'Buscar IP', description: 'Información de red', icon: <Globe className="w-5 h-5" /> },
     { id: 'subnet', name: 'Submáscaras', description: 'Cálculo de redes', icon: <Search className="w-5 h-5" /> },
     { id: 'hash', name: 'Hash Generator', description: 'SHA-256, MD5', icon: <Hash className="w-5 h-5" /> },
+    { id: 'lorem', name: 'Lorem Ipsum', description: 'Generador de texto', icon: <FileText className="w-5 h-5" /> },
   ];
 
   return (
@@ -105,6 +106,7 @@ function ToolContainer({ id, onBack }) {
         case 'hash': return <HashTool />;
         case 'steganography': return <SteganographyTool />;
         case 'subnet': return <SubnetTool />;
+        case 'lorem': return <LoremIpsumTool />;
         default: return (
             <div className="text-center py-10">
                 <p className="text-gray-500 mb-4">Esta herramienta estará disponible próximamente.</p>
@@ -482,6 +484,100 @@ function TranscribeTool() {
                 <div className="pt-6 animate-in fade-in slide-in-from-bottom duration-300">
                     <div className="p-6 rounded-[2rem] bg-blue-600/5 dark:bg-blue-400/5 border-2 border-blue-600/10 text-gray-900 dark:text-white break-all font-mono text-sm">
                         {output}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function LoremIpsumTool() {
+    const [type, setType] = useState('paragraphs');
+    const [count, setCount] = useState(3);
+    const [output, setOutput] = useState('');
+    const [copied, setCopied] = useState(false);
+
+    const baseText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+    const generate = () => {
+        let result = [];
+        if (type === 'paragraphs') {
+            for (let i = 0; i < count; i++) {
+                result.push(baseText);
+            }
+            setOutput(result.join('\n\n'));
+        } else {
+            const words = baseText.split(' ');
+            let wordList = [];
+            for (let i = 0; i < count; i++) {
+                wordList.push(words[i % words.length]);
+            }
+            setOutput(wordList.join(' ') + '.');
+        }
+    };
+
+    const copy = () => {
+        navigator.clipboard.writeText(output);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <div className="space-y-8">
+            <h4 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter italic">Lorem Ipsum</h4>
+            
+            <div className="flex flex-wrap gap-4 items-end">
+                <div className="flex-1 min-w-[150px] space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Cantidad</label>
+                    <input 
+                        type="number" 
+                        min="1" 
+                        max="50"
+                        value={count}
+                        onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                        className="w-full p-4 rounded-2xl bg-gray-100/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-blue-600/30 text-gray-900 dark:text-white outline-none font-bold"
+                    />
+                </div>
+                <div className="flex-1 min-w-[200px] space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Tipo</label>
+                    <div className="flex bg-gray-100 dark:bg-gray-900/50 p-1 rounded-2xl border border-white/5">
+                        {['paragraphs', 'words'].map((t) => (
+                            <button
+                                key={t}
+                                onClick={() => setType(t)}
+                                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase transition-all ${
+                                    type === t 
+                                        ? 'bg-blue-600 text-white shadow-lg' 
+                                        : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
+                                }`}
+                            >
+                                {t === 'paragraphs' ? 'Párrafos' : 'Palabras'}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <button 
+                    onClick={generate}
+                    className="flex-none px-8 py-4 bg-blue-600 text-white font-black text-xs rounded-2xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 uppercase tracking-widest"
+                >
+                    Generar
+                </button>
+            </div>
+
+            {output && (
+                <div className="pt-6 animate-in fade-in slide-in-from-bottom duration-300">
+                    <div className="relative group">
+                        <textarea 
+                            readOnly
+                            value={output}
+                            className="w-full p-8 rounded-[2.5rem] bg-blue-600/5 dark:bg-blue-400/5 border-2 border-blue-600/10 text-gray-900 dark:text-white font-medium text-sm min-h-[250px] outline-none resize-none leading-relaxed"
+                        />
+                        <button 
+                            onClick={copy}
+                            className="absolute top-6 right-6 p-3 bg-white dark:bg-gray-800 text-blue-600 rounded-2xl shadow-xl border border-blue-100 dark:border-blue-900/30 hover:scale-110 transition-all active:scale-95"
+                        >
+                            {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+                        </button>
                     </div>
                 </div>
             )}

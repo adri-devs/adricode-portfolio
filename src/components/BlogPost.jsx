@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft, Tag } from 'lucide-react';
+import { Share2, Twitter, MessageCircle, Copy, Check, Calendar, User, ArrowLeft, Tag } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
@@ -15,6 +15,7 @@ export default function BlogPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const fetchPost = async () => {
     setLoading(true);
@@ -46,6 +47,23 @@ export default function BlogPost() {
     });
   };
 
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleShareTwitter = () => {
+    const text = `Echa un vistazo a este artículo: ${post.title}`;
+    const url = window.location.href;
+    window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  };
+
+  const handleShareWhatsApp = () => {
+    const text = `Echa un vistazo a este artículo: ${post.title} - ${window.location.href}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
   if (loading) {
     return (
       <div className="px-4 sm:px-6 lg:px-12 py-20 min-h-screen flex items-center justify-center">
@@ -72,7 +90,6 @@ export default function BlogPost() {
   }
 
   const processContent = (content) => {
-    // Buscar patrones de firma al final del contenido
     const signaturePatterns = [
       /<span class="signature">.*?<\/span>$/s
     ];
@@ -137,6 +154,37 @@ export default function BlogPost() {
             </p>
           )}
         </header>
+
+        <div className="flex flex-wrap items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700/50">
+          <div className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+            <Share2 className="w-4 h-4" />
+            <span>Compartir</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopyLink}
+              title="Copiar enlace"
+              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all active:scale-90"
+            >
+              {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={handleShareTwitter}
+              title="Compartir en Twitter"
+              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-400 hover:text-blue-500 dark:hover:text-blue-500 transition-all active:scale-90"
+            >
+              <Twitter className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleShareWhatsApp}
+              title="Compartir en WhatsApp"
+              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-500 hover:text-green-600 dark:hover:text-green-600 transition-all active:scale-90"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
         <div className="w-full blog-post-container">
           <article className="w-full blog-content">
             <ReactMarkdown
