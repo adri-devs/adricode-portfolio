@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getTechColor } from '../constants/techColors';
 import { ExternalLink, Github, X, Info } from 'lucide-react';
 
 export default function Projects({ selectedProject, setSelectedProject }) {
-  const [isClosing, setIsClosing] = useState(false);
 
   const projects = [
     {
@@ -59,11 +58,7 @@ export default function Projects({ selectedProject, setSelectedProject }) {
   };
 
   const closePreview = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setSelectedProject(null);
-      setIsClosing(false);
-    }, 500);
+    setSelectedProject(null);
   };
 
 
@@ -131,11 +126,11 @@ export default function Projects({ selectedProject, setSelectedProject }) {
         <>
           {/* Mobile Modal */}
           <div 
-            className={`lg:hidden fixed inset-0 z-[100] flex items-center sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isClosing ? 'opacity-0' : 'animate-fade-in'}`}
+            className="lg:hidden fixed inset-0 z-[100] flex items-center sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-500 animate-fade-in"
             onClick={closePreview}
           >
             <div 
-              className={`bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col transition-all duration-500 ${isClosing ? 'opacity-0 translate-y-20' : 'animate-slide-in-bottom'}`}
+              className="bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col transition-all duration-500 animate-slide-in-bottom"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="overflow-y-auto p-6">
@@ -146,7 +141,7 @@ export default function Projects({ selectedProject, setSelectedProject }) {
 
           {/* Desktop Sliding Preview */}
           <div 
-            className={`hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-all duration-500 ease-out transform ${isClosing ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100 animate-slide-in-left'}`}
+            className="hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-all duration-500 ease-out transform translate-x-0 opacity-100 animate-slide-in-left"
           >
              <div 
                className="h-full w-full bg-white/40 dark:bg-gray-900/40 shadow-2xl project-preview-slant pointer-events-auto overflow-y-auto"

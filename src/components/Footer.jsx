@@ -1,19 +1,8 @@
 import { ArrowUp, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      setShowScrollTop(scrollPos > 300);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -33,24 +22,13 @@ export default function Footer() {
 
   return (
     <>
-      {/* Floating button for mobile/tablet */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-24 right-6 p-4 bg-purple-600 text-white rounded-full shadow-2xl z-[150] transition-all duration-300 lg:hidden ${
-          showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-        }`}
-        aria-label="Volver al inicio"
-      >
-        <ArrowUp className="w-6 h-6" />
-      </button>
-
       <footer className="bg-transparent pt-16 pb-8 px-4 relative">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center">
           
-          {/* Desktop Scroll to Top (Visible above footer) */}
+          {/* Scroll to Top */}
           <button
             onClick={scrollToTop}
-            className="hidden lg:flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-12 group"
+            className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-12 group"
           >
             <span>Volver al Inicio</span>
             <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
