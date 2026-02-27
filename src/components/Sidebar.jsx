@@ -34,19 +34,15 @@ export default function Sidebar({ onOpenPlayground, selectedProject }) {
 
   return (
     <aside 
-      className={`h-full p-3 lg:p-6 flex flex-col gap-6 transition-colors duration-500 ${
-        selectedProject 
-          ? 'bg-[rgba(124,58,237,0.25)] dark:bg-[rgba(138,92,246,0.15)]' 
-          : ''
-      }`}
+      className="h-full p-3 lg:p-6 flex flex-col gap-6"
     >
-      <div className="flex-1 space-y-4">
+      <div id="openPlayground" className="flex-1 space-y-4">
         <button 
           onClick={onOpenPlayground}
           className="w-full bg-purple-50 dark:bg-purple-900/10 border border-purple-100 dark:border-purple-800/30 rounded-xl p-4 transition-all hover:shadow-xl hover:scale-[1.02] active:scale-95 group text-left"
         >
           <div className="flex items-center gap-4">
-            <div className="p-2.5 bg-purple-600 rounded-xl text-white group-hover:bg-purple-500 transition-colors shadow-lg shadow-purple-600/20">
+            <div className="">
               <Gamepad2 className="w-5 h-5" />
             </div>
             <h4 className="text-sm font-bold text-gray-900 dark:text-white tracking-tight">Playground</h4>
@@ -57,7 +53,7 @@ export default function Sidebar({ onOpenPlayground, selectedProject }) {
           to="/cyberlab"
           className="block w-full bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30 rounded-xl p-4 transition-all hover:shadow-xl hover:scale-[1.02] active:scale-95 group text-left"
         >
-          <div className="flex items-center gap-4">
+          <div id ="openCyberlab" className="flex items-center gap-4">
             <div className="p-2.5 bg-blue-600 rounded-xl text-white group-hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20">
               <Shield className="w-5 h-5" />
             </div>

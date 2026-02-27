@@ -14,7 +14,7 @@ export default function CyberLab() {
   ];
 
   return (
-    <div className="min-h-screen py-16 lg:py-24 px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen py-12 lg:py-20 px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
       {/* Dynamic Header */}
       <div className="mb-12 transition-all">
         {!activeTool ? (

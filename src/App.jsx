@@ -88,7 +88,7 @@ function AppContent() {
           <Footer />
         </main>
 
-        <aside className="hidden lg:block fixed right-0 top-16 h-[calc(100vh-4rem)] w-80 border-none overflow-y-auto">
+        <aside className="hidden lg:block fixed right-0 top-16 h-[calc(100vh-4rem)] w-80 border-none overflow-y-auto z-[100]">
           <Sidebar 
             onOpenPlayground={() => setShowPlayground(true)} 
             selectedProject={selectedProject}
