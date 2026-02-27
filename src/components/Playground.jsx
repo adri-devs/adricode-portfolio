@@ -49,21 +49,21 @@ export default function Playground({ onClose }) {
       </div>
 
       <div className="space-y-6">
-        {/* Sudoku Card */}
-        <button 
-          onClick={() => setActiveGame('sudoku')}
-          className="w-full p-6 rounded-2xl border-2 border-purple-100 dark:border-purple-900/30 bg-purple-50/50 dark:bg-purple-900/10 flex flex-col items-center text-center gap-4 group transition-all hover:border-purple-500 hover:bg-purple-100 dark:hover:bg-purple-900/20 active:scale-95"
-        >
-          <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-2xl shadow-inner flex items-center justify-center text-purple-600 mb-2">
+        {/* Sudoku Card (Disabled Temporarily) */}
+        <div className="p-6 rounded-2xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/10 flex flex-col items-center text-center gap-4 opacity-60 grayscale">
+          <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-2xl shadow-inner flex items-center justify-center text-gray-400 mb-2 relative">
              <Grid3X3 size={40} strokeWidth={2.5} />
+             <div className="absolute -top-2 -right-2 p-1.5 bg-amber-500 rounded-lg text-white shadow-lg">
+                <Lock className="w-4 h-4" />
+             </div>
           </div>
           <div>
             <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Sudoku</h4>
-            <p className="text-purple-600 dark:text-purple-400 font-black tracking-widest text-xs uppercase">
-              Jugar ahora
+            <p className="text-gray-500 font-black tracking-widest text-xs uppercase">
+              Pendiente de revisión
             </p>
           </div>
-        </button>
+        </div>
 
         {/* Locked Card */}
         <div className="p-6 rounded-2xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/10 flex flex-col items-center text-center gap-4 opacity-60 grayscale">

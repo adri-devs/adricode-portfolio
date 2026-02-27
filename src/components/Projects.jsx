@@ -69,7 +69,7 @@ export default function Projects({ selectedProject, setSelectedProject }) {
 
   return (
     <div className="relative min-h-screen">
-      <div className={`px-6 lg:px-12 pt-8 md:pt-10 mx-auto max-w-7xl transition-all duration-500 ${selectedProject ? 'lg:translate-x-[25%] lg:opacity-50 blur-sm lg:blur-none pointer-events-none lg:pointer-events-auto' : ''}`}>
+      <div className={`px-6 md:px-12 lg:px-12 xl:px-24 pt-8 md:pt-10 mx-auto max-w-[100rem] transition-all duration-500 ${selectedProject ? 'lg:translate-x-[25%] lg:opacity-50 blur-sm lg:blur-none pointer-events-none lg:pointer-events-auto' : ''}`}>
         <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white pb-8">
           Proyectos destacados
         </h2>
@@ -131,11 +131,11 @@ export default function Projects({ selectedProject, setSelectedProject }) {
         <>
           {/* Mobile Modal */}
           <div 
-            className="lg:hidden fixed inset-0 z-[100] flex items-center sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+            className="lg:hidden fixed inset-0 z-[100] flex items-center sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
             onClick={closePreview}
           >
             <div 
-              className={`bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500 max-h-[90vh] flex flex-col ${isClosing ? 'animate-out slide-out-to-bottom' : ''}`}
+              className={`bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-slide-in-bottom max-h-[90vh] flex flex-col ${isClosing ? 'opacity-0 translate-y-20 transition-all duration-500' : ''}`}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="overflow-y-auto p-6">
@@ -146,7 +146,7 @@ export default function Projects({ selectedProject, setSelectedProject }) {
 
           {/* Desktop Sliding Preview */}
           <div 
-            className={`hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-all duration-500 ease-out transform ${isClosing ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100'} animate-in fade-in slide-in-from-left duration-500`}
+            className={`hidden lg:block fixed top-0 left-0 h-screen w-screen z-[90] pointer-events-none transition-all duration-500 ease-out transform ${isClosing ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100'} animate-slide-in-left`}
           >
              <div 
                className="h-full w-full bg-white/40 dark:bg-gray-900/40 shadow-2xl project-preview-slant pointer-events-auto overflow-y-auto"

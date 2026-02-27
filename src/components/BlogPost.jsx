@@ -155,35 +155,7 @@ export default function BlogPost() {
           )}
         </header>
 
-        <div className="flex flex-wrap items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700/50">
-          <div className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
-            <Share2 className="w-4 h-4" />
-            <span>Compartir</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleCopyLink}
-              title="Copiar enlace"
-              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all active:scale-90"
-            >
-              {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
-            </button>
-            <button
-              onClick={handleShareTwitter}
-              title="Compartir en Twitter"
-              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-400 hover:text-blue-500 dark:hover:text-blue-500 transition-all active:scale-90"
-            >
-              <Twitter className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleShareWhatsApp}
-              title="Compartir en WhatsApp"
-              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-500 hover:text-green-600 dark:hover:text-green-600 transition-all active:scale-90"
-            >
-              <MessageCircle className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+    
 
         <div className="w-full blog-post-container">
           <article className="w-full blog-content">
@@ -239,6 +211,35 @@ export default function BlogPost() {
               </div>
             )}
           </article>
+          <div className="flex flex-wrap items-center gap-4 my-2 mt-6 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700/50">
+          <div className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+            <Share2 className="w-4 h-4" />
+            <span>Compartir</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopyLink}
+              title="Copiar enlace"
+              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all active:scale-90"
+            >
+              {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={handleShareTwitter}
+              title="Compartir en Twitter"
+              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-400 hover:text-blue-500 dark:hover:text-blue-500 transition-all active:scale-90"
+            >
+              <Twitter className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleShareWhatsApp}
+              title="Compartir en WhatsApp"
+              className="p-2.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-500 hover:text-green-600 dark:hover:text-green-600 transition-all active:scale-90"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
         </div>
         <footer className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-gray-200 dark:border-gray-700 w-full">
           <Link to="/blog" className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:underline font-medium">

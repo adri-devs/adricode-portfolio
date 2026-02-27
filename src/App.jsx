@@ -47,7 +47,7 @@ function AppContent() {
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 relative overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-gray-900 relative">
       <div className="background-triangle"></div>
       <a 
         href="https://drive.google.com/file/d/1tqkOx8XchXLM84Oz35cWnEJk2esLtZKe/view?usp=drive_link" 
