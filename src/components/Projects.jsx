@@ -19,12 +19,12 @@ export default function Projects({ selectedProject, setSelectedProject }) {
       }
     },
     {
-      title: "Peluquería Canina  Alma",
-      subtitle: "Peluquería canina",
-      description: "Aplicación web con panel de administración.",
+      title: "Peluquería Canina",
+      subtitle: "Pelucan Alma",
+      description: "Página web + panel de gestión interna.",
       tech: ["Laravel", "MySQL", "Tailwind CSS", "PostCSS"],
       demo: "https://pelucanalma.com",
-      image: "/images/pelucan_showcase.png"
+      image: "/images/peluqueria_showcase.png"
     },
     {
       title: "Eventura",
