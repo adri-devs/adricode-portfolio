@@ -123,8 +123,8 @@ export default function BlogPost() {
 
   return (
     <div className="max-w-6xl px-6 lg:px-12 pt-8 lg:pt-10 mx-auto 2xl:ms-32">
-      <div className="max-w-4xl">
-        <Link to="/blog" className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:underline mb-6 sm:mb-8">
+      <div className="max-w-4xl"> 
+        <Link to="/blog" className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 font-black hover:underline mb-6 sm:mb-8">
           <ArrowLeft className="w-4 h-4" />
           Volver a Artículos
         </Link>
@@ -195,7 +195,7 @@ export default function BlogPost() {
                 code({ inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || '');
                   return !inline && match ? (
-                    <div className="code-block-scroll-wrapper">
+                    <div className="p-4 code-block-scroll-wrapper">
                       <SyntaxHighlighter
                         style={oneDark}
                         language={match[1]}

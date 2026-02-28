@@ -1,7 +1,26 @@
+  import { useNavigate, useLocation } from 'react-router-dom';
+import { ArrowLeft   } from 'lucide-react';
+
 export default function Privacy() {
+      const navigate = useNavigate();
+    const location = useLocation();
+    const handleBack = () => {
+      if (location.key === "default") {
+          navigate("/", { replace: true });
+      } else {
+          navigate(-1);
+      }
+    };
   return (
     <div className="px-4 sm:px-6 lg:px-12 pt-8 lg:pt-10 max-w-4xl mx-auto 2xl:ms-32">
-      <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+           <button 
+              onClick={handleBack}
+              className="flex items-center mb-4 gap-2 text-purple-600 dark:text-purple-400 font-black text-sm uppercase tracking-widest hover:gap-3 transition-all group"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Volver a la página anterior
+            </button>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
         Política de Privacidad
       </h1>
 

@@ -1,8 +1,19 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Shield, Lock, Unlock, Search, Cpu, Globe, Hash, RefreshCcw, ArrowLeft, X, FileText, Copy, Check } from 'lucide-react';
 
 export default function CyberLab() {
   const [activeTool, setActiveTool] = useState(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleBack = () => {
+    if (location.key === "default") {
+        navigate("/", { replace: true });
+    } else {
+        navigate(-1);
+    }
+  };
 
   const tools = [
     { id: 'encoding', name: 'Encriptar / Desencriptar', description: 'Base64, Rot13', icon: <Lock className="w-5 h-5" /> },
@@ -16,16 +27,22 @@ export default function CyberLab() {
 
   return (
     <div className="min-h-screen py-12 lg:py-20 px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
-      {/* Dynamic Header */}
+         <button 
+            onClick={handleBack}
+            className="flex items-center mb-4 gap-2 text-purple-600 dark:text-purple-400 font-black text-sm uppercase tracking-widest hover:gap-3 transition-all group"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Volver a la página anterior
+          </button>
       <div className="mb-12 transition-all">
         {!activeTool ? (
           <div className="animate-in fade-in slide-in-from-top duration-500">
-            <h2 className="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter uppercase italic">
+            <h2 className="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-2xº tracking-tighter uppercase italic">
               CyberLab
             </h2>
-            <div className="h-1.5 w-24 bg-blue-600 rounded-full mb-6" />
+            <div className="h-1.5 w-24 bg-purple-600 rounded-full mb-4" />
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl font-medium leading-relaxed">
-              Herramientas experimentales de seguridad, criptografía y redes en un entorno controlado.
+              Herramientas experimentales de seguridad, criptografía, redes y 4fun.
             </p>
           </div>
         ) : (
@@ -33,7 +50,7 @@ export default function CyberLab() {
             onClick={() => setActiveTool(null)}
             className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-black text-sm uppercase tracking-widest hover:gap-4 transition-all group"
           >
-            <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft className="w-5 h-5" />
             Volver al laboratorio
           </button>
         )}
@@ -46,13 +63,13 @@ export default function CyberLab() {
             <button 
               key={tool.id}
               onClick={() => setActiveTool(tool.id)}
-              className={`p-5 rounded-3xl border-2 transition-all flex items-center gap-4 text-left group overflow-hidden relative ${
+              className={`p-4 rounded-xl border-2 transition-all flex items-center gap-4 text-left group overflow-hidden relative ${
                 activeTool === tool.id 
                   ? 'border-blue-600 bg-blue-600 text-white shadow-xl shadow-blue-600/20' 
                   : 'border-white/10 dark:border-white/5 bg-white/40 dark:bg-gray-800/40 backdrop-blur-md hover:border-blue-500/50 hover:bg-white/60 dark:hover:bg-gray-800/60'
               }`}
             >
-              <div className={`p-3 rounded-2xl transition-all ${
+              <div className={`p-2 rounded-xl transition-all ${
                 activeTool === tool.id 
                   ? 'bg-white/20 text-white' 
                   : 'bg-blue-600/10 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white shadow-sm'
@@ -63,7 +80,7 @@ export default function CyberLab() {
                 <h3 className={`font-black text-sm uppercase tracking-tight ${activeTool === tool.id ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                   {tool.name}
                 </h3>
-                <p className={`text-[10px] font-bold ${activeTool === tool.id ? 'text-blue-100' : 'text-gray-500'}`}>
+                <p className={`text-[11px] font-bold ${activeTool === tool.id ? 'text-blue-100' : 'text-gray-500'}`}>
                   {tool.description}
                 </p>
               </div>

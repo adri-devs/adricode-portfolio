@@ -168,10 +168,10 @@ export default function Projects({ selectedProject, setSelectedProject }) {
 
 function ProjectDetailContent({ project, onClose, isMobile }) {
   return (
-    <div className={`relative ${isMobile ? 'space-y-4' : 'space-y-6'}`}>
+    <div className={`relative ${isMobile ? 'space-y-2' : 'space-y-4'}`}>
       <button 
         onClick={onClose}
-        className="absolute top-0 right-0 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+        className="absolute top-5 right-0 p-2 px-4 rounded-50 bg-gray-100 dark:bg-gray-800 text-gray-300 hover:text-gray-100 dark:hover:text-white transition-colors"
       >
         <X className="w-5 h-5" />
       </button>
